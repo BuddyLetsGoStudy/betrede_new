@@ -1,0 +1,46 @@
+{
+  "name": "react-django-template",
+  "version": "1.0.0",
+  "description": "Basic template for a React/Redux and DRF web app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch ./basic/frontend/src/index.js --output ./basic/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./basic/frontend/src/index.js --output ./basic/frontend/static/frontend/main.js",
+    "start": "react-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuddyLetsGoStudy/react-django-template.git"
+  },
+  "author": "@buddyletsgostudy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BuddyLetsGoStudy/react-django-template/issues"
+  },
+  "homepage": "https://github.com/BuddyLetsGoStudy/react-django-template#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "sass": "^1.17.2",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-alert": "^5.2.0",
+    "react-alert-template-basic": "^1.0.0",
+    "react-dom": "^16.8.4",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.6.0",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  }
+}
