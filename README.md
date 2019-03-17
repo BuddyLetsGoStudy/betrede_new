@@ -1,4 +1,4 @@
-Basic template for a React/Redux and DjangoRestFramework web app
+Betrede 
 ====================
 ```bash
 npm i
