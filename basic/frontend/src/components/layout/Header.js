@@ -16,15 +16,15 @@ export class Header extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <div class="dropdown show">
-          <a class="dropdown-toggle navbar__user_li" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div className="dropdown show">
+          <a className="dropdown-toggle navbar__user_li" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {user ? `${user.username}` : ""}
           </a>
 
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="/my/spaces">Create a space</a>
-            <a class="dropdown-item" href="/my/artobjects">Create an artobject</a>
-            <a class="dropdown-item" onClick={this.props.logout}>Logout</a>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a className="dropdown-item" href="/my/spaces">Create a space</a>
+            <a className="dropdown-item" href="/my/artobjects">Create an artobject</a>
+            <a className="dropdown-item" onClick={this.props.logout}>Logout</a>
           </div>
          </div>
       </ul>

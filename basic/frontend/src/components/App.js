@@ -15,6 +15,9 @@ import PrivateContent from './layout/PrivateContent';
 import Login from './accounts/Login'
 import Register from './accounts/Register'
 import PrivateRoute from './common/PrivateRoute'
+import ArtObjectForm from './profile/ArtObjectForm'
+import SpaceForm from './profile/SpaceForm'
+
 
 const alertOptions = {
   timeout: 3000,
@@ -36,9 +39,11 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={PrivateContent} />
+                  <Route exact path="/" component={PrivateContent} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <PrivateRoute exact path="/artobject" component={ArtObjectForm} />
+                  <PrivateRoute exact path="/space" component={SpaceForm} />
                 </Switch>
               </div>
             </Fragment>
