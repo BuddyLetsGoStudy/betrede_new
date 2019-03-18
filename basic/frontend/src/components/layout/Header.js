@@ -22,8 +22,8 @@ export class Header extends Component {
           </a>
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a className="dropdown-item" href="/my/spaces">Create a space</a>
-            <a className="dropdown-item" href="/my/artobjects">Create an artobject</a>
+            <a className="dropdown-item" href="/space">Create a space</a>
+            <a className="dropdown-item" href="/artobject">Create an artobject</a>
             <a className="dropdown-item" onClick={this.props.logout}>Logout</a>
           </div>
          </div>

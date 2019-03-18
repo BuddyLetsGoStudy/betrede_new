@@ -12,7 +12,8 @@ export default function(state = initialState, action) {
                 artObjects: action.payload
             }
         case GET_ARTOBJECTS:
-            return{
+            console.log(action.payload)
+            return {
                 ...state,
                 artObjects: action.payload
             }

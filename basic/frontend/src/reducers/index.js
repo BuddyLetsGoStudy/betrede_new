@@ -6,8 +6,8 @@ import artspace from './artspace'
 
 
 export default combineReducers({
+    artspace,
     errors,
     messages,
-    auth,
-    artspace
+    auth
 })

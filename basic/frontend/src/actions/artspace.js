@@ -25,17 +25,24 @@ export const addArtObject = artObject => (dispatch, getState) => {
       })
 }
 
-// export const getArtObjects = () => (dispatch, getState) => {
-//     const user_id = getState().auth.user.id
-//     console.log(user_id)
-//     axios
-//       .get(`/api/artobjects/?author=${user_id}`, tokenConfig(getState))
-//       .then(res => {
-//           console.log(res)
-//           dispatch({
-//               type: GET_ARTOBJECTS,
-//               payload: res.data
-//           })
-//       })
-//       .catch(err => console.log(err))
-// }
+export const getArtObjects = () => (dispatch, getState) => {
+    if (getState().auth.isAuthenticated){
+        const user_id = getState().auth.user.id
+        axios
+        .get(`/api/artobjects/?author=${user_id}`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_ARTOBJECTS,
+                payload: res.data
+            })
+        })
+        .catch(err => console.log(err))
+    } else {
+        dispatch({
+            type: GET_ARTOBJECTS,
+            payload: []
+        })
+    }
+   
+    
+}

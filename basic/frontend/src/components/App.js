@@ -16,7 +16,7 @@ import Login from './accounts/Login'
 import Register from './accounts/Register'
 import PrivateRoute from './common/PrivateRoute'
 import ArtObjectForm from './profile/ArtObjectForm'
-import SpaceForm from './profile/SpaceForm'
+import Space from './profile/Space'
 
 
 const alertOptions = {
@@ -39,11 +39,11 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/" component={PrivateContent} />
+                  <Route exact path="/а" component={PrivateContent} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
-                  <PrivateRoute exact path="/artobject" component={ArtObjectForm} />
-                  <PrivateRoute exact path="/space" component={SpaceForm} />
+                  <Route exact path="/artobject" component={ArtObjectForm} />
+                  <Route exact path="/" component={Space} />
                 </Switch>
               </div>
             </Fragment>
