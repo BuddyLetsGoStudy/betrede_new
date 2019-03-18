@@ -39,11 +39,11 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/а" component={PrivateContent} />
+                  <Route exact path="/" component={PrivateContent} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/artobject" component={ArtObjectForm} />
-                  <Route exact path="/" component={Space} />
+                  <Route exact path="/space" component={Space} />
                 </Switch>
               </div>
             </Fragment>
