@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createMessage } from "../../actions/messages";
-import { getArtObjects } from '../../actions/artspace'
-
+import { getArtObjects, addSpace } from '../../actions/artspace'
 import axios from 'axios'
 
 
@@ -19,20 +18,6 @@ class SpaceForm extends Component {
         getArtObjects: PropTypes.func.isRequired,
         createMessage: PropTypes.func.isRequired,
     }
-
-    fetchArtObj(user_id){
-        return axios
-                .get(`/api/artobjects/?author=${user_id}`)
-                .then(res => {
-                    console.log(res.data)
-                    this.setState({
-                        artobjects: res.data,
-                    })
-                    console.log(this.state.artobjects)
-                })
-                .catch(err => console.log(err))
-
-      }
 
     componentDidMount(){
        this.props.getArtObjects()
@@ -63,19 +48,14 @@ class SpaceForm extends Component {
 
     onSubmit = e => {
         e.preventDefault()
-
-        axios.post('https://betredeapi.logachev.top/api/space/', {
-           name: e.target.elements.name.value,
-           description: e.target.elements.description.value,
-           artobjects: this.artobjects_arr,
-       })
-       .then(res => {
-         console.log(res)
-         window.location.assign(`/spaces/${res.data.id}/`)
-        })
-       .catch(error => console.log(error.response.data))
-  
+        const space = {
+          name: e.target.elements.name.value,
+          description: e.target.elements.description.value,
+          artobjects: this.artobjects_arr
+        }
+        this.props.addSpace(space)
     }
+
     render() {
       console.log(this.props.artObjects)
       const { artObjects } = this.props
@@ -111,4 +91,4 @@ const mapStateToProps = state => ({
     artObjects: state.artspace.artObjects
 })
 
-export default connect(mapStateToProps, { createMessage, getArtObjects })(SpaceForm)
+export default connect(mapStateToProps, { createMessage, getArtObjects, addSpace })(SpaceForm)
