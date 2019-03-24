@@ -26,14 +26,19 @@ class ArtObjectForm extends Component {
         const formData = new FormData();
 
         formData.append("name", e.target.elements.name.value)
-        // formData.append("author", this.props.auth.user.id)
         formData.append('category', 1)
         formData.append("description", e.target.elements.description.value)
         formData.append("width", e.target.elements.width.value)
         formData.append("height", e.target.elements.height.value)
         formData.append("upload", e.target.elements.upload.files[0])
 
-        return axios.post("/api/artobjects/", formData, {})
+        const config = {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        }
+
+        return axios.post("/api/artobjects/", formData, config)
         .then(res => {
             console.log(res)
             this.props.createMessage({ addArtObject: 'Art Object Added' })

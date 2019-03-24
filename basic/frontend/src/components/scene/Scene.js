@@ -20,24 +20,24 @@ class Scene extends Component {
 //         artobjects: []
 //     }
 
-//     this.start = this.start.bind(this)
-//     this.stop = this.stop.bind(this)
-//     this.animate = this.animate.bind(this)
-//     this.createPainting = this.createPainting.bind(this)
-//     this.fetchArtObj = this.fetchArtObj.bind(this)
+    // this.start = this.start.bind(this)
+    // this.stop = this.stop.bind(this)
+    // this.animate = this.animate.bind(this)
+    // this.createPainting = this.createPainting.bind(this)
+    // this.fetchArtObj = this.fetchArtObj.bind(this)
 //   }
 
-//   createPainting(imgUrl, pos, height, width){
-//     let texture = new THREE.TextureLoader().load(imgUrl)
-//     texture.wrapS = THREE.RepeatWrapping
-//     texture.wrapT = THREE.RepeatWrapping
-//     texture.repeat.set( 1, 1 );
-//     let geometry = new THREE.BoxGeometry(width, height, 0.1)
-//     let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
-//     let cube = new THREE.Mesh(geometry, material)
-//     cube.position.x = pos
-//     this.scene.add(cube)
-//   }
+  // createPainting(imgUrl, pos, height, width){
+  //   let texture = new THREE.TextureLoader().load(imgUrl)
+  //   texture.wrapS = THREE.RepeatWrapping
+  //   texture.wrapT = THREE.RepeatWrapping
+  //   texture.repeat.set( 1, 1 );
+  //   let geometry = new THREE.BoxGeometry(width, height, 0.1)
+  //   let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
+  //   let cube = new THREE.Mesh(geometry, material)
+  //   cube.position.x = pos
+  //   this.scene.add(cube)
+  // }
 
 //   pushArray(a, e){
 //     a.push(e)
@@ -113,41 +113,41 @@ class Scene extends Component {
     // this.start()
   }
 
-//   componentWillUnmount() {
-//     this.stop()
-//     this.mount.removeChild(this.renderer.domElement)
-//   }
+  // componentWillUnmount() {
+  //   this.stop()
+  //   this.mount.removeChild(this.renderer.domElement)
+  // }
 
-//   start() {
-//     if (!this.frameId) {
-//       this.frameId = requestAnimationFrame(this.animate)
-//     }
-//   }
+  // start() {
+  //   if (!this.frameId) {
+  //     this.frameId = requestAnimationFrame(this.animate)
+  //   }
+  // }
 
-//   stop() {
-//     cancelAnimationFrame(this.frameId)
-//   }
+  // stop() {
+  //   cancelAnimationFrame(this.frameId)
+  // }
 
-//   animate() {
-//     // this.controls.update()
-//     this.controls.update(this.clock.getDelta());
-//     this.renderScene()
-//     this.frameId = window.requestAnimationFrame(this.animate)
-//   }
+  // animate() {
+  //   // this.controls.update()
+  //   this.controls.update(this.clock.getDelta());
+  //   this.renderScene()
+  //   this.frameId = window.requestAnimationFrame(this.animate)
+  // }
 
-//   renderScene() {
+  // renderScene() {
 
-//     this.renderer.render(this.scene, this.camera)
-//   }
+  //   this.renderer.render(this.scene, this.camera)
+  // }
 
-//   render() {
-//     return (
-//       <div
-//         className="scene"
-//         ref={(mount) => { this.mount = mount }}
-//       />
-//     )
-//   }
+  // render() {
+  //   return (
+  //     <div
+  //       className="scene"
+  //       ref={(mount) => { this.mount = mount }}
+  //     />
+  //   )
+  // }
 
 render() {
     const { sceneIsLoading, space, artObjects } = this.props
@@ -159,7 +159,7 @@ render() {
           ?
           <h1>Loading...</h1>
           :
-          <GenerateScene space={space} artObjects={artObjects} />
+          <GenerateScene />
         }
       </Fragment>
     )

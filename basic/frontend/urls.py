@@ -7,5 +7,5 @@ urlpatterns = [
    path('register/', views.index),
    path('artobject/', views.index),
    path('space/', views.index),
-   re_path(r'^scene/(?P<format>[0-9]+)/$', views.index)
+   re_path(r'^scene/(?P<format>[0-9]+)/$', views.scene)
 ]

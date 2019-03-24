@@ -112,11 +112,16 @@ export const getScene = id => (dispatch, getState) => {
             .then(res => {
                 artObjectsData.push(res.data)
             })
+            .then(() => {
+                if(artObjectID === artObjectsIDs[artObjectsIDs.length - 1]){
+                    dispatch({
+                        type: GET_SCENE,
+                        payload: { sceneData, artObjectsData }
+                    })
+                }
+            })
         )
-        dispatch({
-            type: GET_SCENE,
-            payload: { sceneData, artObjectsData }
-        })
+        
     })
 
     .catch(err => console.log(err))

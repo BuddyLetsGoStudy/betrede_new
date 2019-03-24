@@ -5,6 +5,10 @@ body{
   .space_detail_artobj_cont img{
     max-width: 100%;
   }
+
+  .artObjectCont img{
+    max-width: 100%;
+  }
   
   .scene{
     position: absolute;
