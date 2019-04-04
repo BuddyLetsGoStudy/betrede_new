@@ -45,8 +45,10 @@ class SpaceViewSet(viewsets.ModelViewSet):
     queryset = Space.objects.all()
 
 
-    # def get_queryset(self):
-    #     return self.request.user.leads.all()
+    def get_queryset(self):
+        for space in Space.objects.all().order_by('-created'):
+            print(space.author)
+        return Space.objects.all().order_by('-created')
 
     def perform_create(self, serializer):
         artObjectsIDs = self.request.data['artObjects']

@@ -15,9 +15,11 @@ class ArtObjectShadowSerializer(serializers.ModelSerializer):
 
 
 class SpaceSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+
     class Meta:
         model = Space
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'created', 'geo', 'views', 'author', 'artobjects']
 
 
 class CategorySerializer(serializers.ModelSerializer):
