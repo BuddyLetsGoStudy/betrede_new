@@ -3,6 +3,7 @@ import { ADD_ARTOBJECT, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GE
 const initialState = {
     artObjects: [],
     spaces: [],
+    artObjectsShadows: [],
     sceneIsLoading: true
 }
 
@@ -45,6 +46,7 @@ export default function(state = initialState, action) {
                 ...state,
                 space: action.payload.sceneData,
                 artObjects: action.payload.artObjectsData,
+                artObjectsShadows: action.payload.artObjectsShadowsData,
                 sceneIsLoading: false
             }
         default:

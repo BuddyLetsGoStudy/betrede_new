@@ -27,10 +27,15 @@ class ArtObject(ModelBase):
     author = models.ForeignKey(User, related_name='artobjects', on_delete=models.CASCADE, null=True)
     width = models.FloatField(default=1.0)
     height = models.FloatField(default=1.7)
+    
+
+class ArtObjectShadow(models.Model):
+    artobject = models.ForeignKey(ArtObject, on_delete=models.CASCADE, null=True)
+    position = models.IntegerField(max_length=4)
 
 
 class Space(ModelBase):
-    artobjects = models.ManyToManyField(ArtObject)
+    artobjects = models.ManyToManyField(ArtObjectShadow, null=True)
     geo = models.TextField(max_length=200, blank=True)
     author = models.ForeignKey(User, related_name='spaces', on_delete=models.CASCADE, null=True)
     views = models.IntegerField(default=0)

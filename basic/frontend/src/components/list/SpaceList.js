@@ -27,7 +27,7 @@ class SpaceList extends Component {
                                 {space.author}
                             </h6>
                             <p className="card-text">{space.description}</p>
-                            <a href={`spaces/${space.id}`} className="btn btn-primary">Enter the space</a>
+                            <a href={`scene/${space.id}`} className="btn btn-primary">Enter the space</a>
                             </div>
                         </div>
                     </div>

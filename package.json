@@ -2,7 +2,7 @@
   "name": "react-django-template",
   "version": "1.0.0",
   "description": "Basic template for a React/Redux and DRF web app",
-  "main": "index.js",
+  "main": "index",
   "scripts": {
     "dev": "webpack --mode development --watch ./basic/frontend/src/index.js --output ./basic/frontend/static/frontend/main.js",
     "build": "webpack --mode production ./basic/frontend/src/index.js --output ./basic/frontend/static/frontend/main.js",
@@ -23,6 +23,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
@@ -30,7 +31,9 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
+    "@fabienmotte/three-first-person-controls": "^73.0.1",
     "axios": "^0.18.0",
+    "first-person-controls": "^1.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-alert": "^5.2.0",
@@ -42,6 +45,7 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "three": "^0.102.1"
+    "three": "^0.102.1",
+    "threejs-controls": "^1.0.6"
   }
 }

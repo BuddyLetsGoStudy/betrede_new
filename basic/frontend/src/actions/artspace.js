@@ -59,7 +59,7 @@ export const addSpace = space => (dispatch, getState) => {
       dispatch(createMessage({ addSpace: 'Space Added' }))
     })
     .catch(err => {
-        console.log(err)
+        console.log(err.response.data)
         const errors = {
             msg: err.response.data,
             status: err.response.status
@@ -104,19 +104,28 @@ export const getScene = id => (dispatch, getState) => {
     .get(`/api/spaces/${id}`, tokenConfig(getState))
     .then(res => {
         const sceneData = res.data
-        const artObjectsIDs = res.data.artobjects
+        const artObjectsShadowsIDs = res.data.artobjects
+        const artObjectsShadowsData = []
         const artObjectsData = []
-        artObjectsIDs.map(artObjectID => 
+        artObjectsShadowsIDs.map(artObjectShadowID => 
             axios
-            .get(`/api/artobjects/${artObjectID}`, tokenConfig(getState))
+            .get(`/api/artobjectsshadows/${artObjectShadowID}`, tokenConfig(getState))
             .then(res => {
-                artObjectsData.push(res.data)
+                artObjectsShadowsData.push(res.data)
+                let artObjectID = res.data.artobject
+                axios
+                .get(`/api/artobjects/${artObjectID}`, tokenConfig(getState))
+                .then(res => {
+                    artObjectsData.push(res.data)
+                })
             })
             .then(() => {
-                if(artObjectID === artObjectsIDs[artObjectsIDs.length - 1]){
+                if(artObjectShadowID === artObjectsShadowsIDs[artObjectsShadowsIDs.length - 1]){
+                    console.log(artObjectsData)
+                    console.log(artObjectsShadowsData)
                     dispatch({
                         type: GET_SCENE,
-                        payload: { sceneData, artObjectsData }
+                        payload: { sceneData, artObjectsData, artObjectsShadowsData }
                     })
                 }
             })
@@ -126,3 +135,36 @@ export const getScene = id => (dispatch, getState) => {
 
     .catch(err => console.log(err))
 }
+
+
+
+
+// export const getScene = id => (dispatch, getState) => {
+//     dispatch({ type: SCENE_LOADING })
+
+//     axios
+//     .get(`/api/spaces/${id}`, tokenConfig(getState))
+//     .then(res => {
+//         const sceneData = res.data
+//         const artObjectsIDs = res.data.artobjects
+//         const artObjectsData = []
+//         artObjectsIDs.map(artObjectID => 
+//             axios
+//             .get(`/api/artobjects/${artObjectID}`, tokenConfig(getState))
+//             .then(res => {
+//                 artObjectsData.push(res.data)
+//             })
+//             .then(() => {
+//                 if(artObjectID === artObjectsIDs[artObjectsIDs.length - 1]){
+//                     dispatch({
+//                         type: GET_SCENE,
+//                         payload: { sceneData, artObjectsData }
+//                     })
+//                 }
+//             })
+//         )
+        
+//     })
+
+//     .catch(err => console.log(err))
+// }

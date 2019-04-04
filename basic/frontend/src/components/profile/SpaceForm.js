@@ -36,10 +36,10 @@ class SpaceForm extends Component {
       let id = e.target.alt
       if (!this.artobjects_arr.includes(id)){
         this.pushArray(this.artobjects_arr, id)
-        e.target.className = 'spaceCreation__img_selected'
+        e.target.className = 'spaceCreation__img_selected artobjects_list'
       } else {
         this.artobjects_arr = this.sliceArray(this.artobjects_arr, id)
-        e.target.className = 'spaceCreation__img'
+        e.target.className = 'artobjects_list'
       }
       console.log(this.artobjects_arr)
     }
@@ -51,7 +51,7 @@ class SpaceForm extends Component {
         const space = {
           name: e.target.elements.name.value,
           description: e.target.elements.description.value,
-          artobjects: this.artobjects_arr
+          artObjects: this.artobjects_arr
         }
         this.props.addSpace(space)
     }
@@ -71,15 +71,15 @@ class SpaceForm extends Component {
                 <label>Description</label>
                 <input type='text' name='description' className="form-control" placeholder="Description"/>
               </div>
-              <div className="spaceCreation__img_cont">
+              <ul className="artobjects_list">
                 {
                   artObjects && artObjects.map(artobject =>
-                    <div className="spaceCreation__div">
-                      <img class="spaceCreation__img" src={artobject.upload} alt={artobject.id} onClick={this.imgClick} />
-                    </div>
+                    <li className="artobjects_list">
+                      <img className="artobjects_list" src={artobject.upload} alt={artobject.id} onClick={this.imgClick} />
+                    </li>
                   )
                 }
-                </div>
+                </ul>
               <button type="submit" className="btn btn-primary">Create</button>
             </form>
           </Fragment>
