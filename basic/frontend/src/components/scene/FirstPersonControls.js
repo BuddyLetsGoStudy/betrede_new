@@ -68,9 +68,9 @@ class FirstPersonControls {
     this._onMouseUp = this.onMouseUp.bind(this)
     this._onKeyDown = this.onKeyDown.bind(this)
     this._onKeyUp = this.onKeyUp.bind(this)
+    this._handleResize = this.handleResize.bind(this)
     document.body.style.cursor = 'none'
 
-    this.handleResize()
     this.bindEvents()
   }
 
@@ -98,6 +98,8 @@ class FirstPersonControls {
 
     window.addEventListener( 'keydown', this._onKeyDown, false )
     window.addEventListener( 'keyup', this._onKeyUp, false )
+
+    window.addEventListener( 'resize', this._handleResize, false );
   }
 
   /**
@@ -240,6 +242,7 @@ class FirstPersonControls {
    * @param  {object} delta Delta
    */
   update( delta ) {
+    this.handleResize()
     if ( this.enabled === false ) {
       return
     }

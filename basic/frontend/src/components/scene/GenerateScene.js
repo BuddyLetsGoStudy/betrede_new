@@ -19,6 +19,7 @@ class GenerateScene extends Component {
         this.createPainting = this.createPainting.bind(this)
         this.genWall = this.genWall.bind(this)
         this.managePaintingCreation = this.managePaintingCreation.bind(this)
+        this.onWindowResize = this.onWindowResize.bind(this)
     }
 
 
@@ -120,7 +121,25 @@ class GenerateScene extends Component {
       this.scene.add( mesh );
     }
 
+    onWindowResize() {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
     componentDidMount(){
+      window.addEventListener( 'resize', this.onWindowResize, false );
+      const element = document.body
+      // element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen
+      // element.requestFullscreen()
+
+      element.addEventListener('click', () => {
+        console.log('kek')
+        element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen
+        element.requestFullscreen()
+       }, false);
+     
+
       const width = this.mount.clientWidth
       const height = this.mount.clientHeight
 
@@ -172,6 +191,7 @@ class GenerateScene extends Component {
         })
       }, 1000)
       // 
+      
 
       this.mount.appendChild(this.renderer.domElement)
       this.start()
