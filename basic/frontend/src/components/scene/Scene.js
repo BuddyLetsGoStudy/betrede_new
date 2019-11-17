@@ -5,166 +5,496 @@ import { connect } from 'react-redux'
 import { getScene } from '../../actions/artspace'
 import PropTypes from 'prop-types'
 import GenerateScene from './GenerateScene'
+import renderHTML from 'react-render-html';
+// import FirstPersonControls from './FirstPersonControls'
 
 
-import FirstPersonControls from './FirstPersonControls'
-
-
-
+const htmlShit = `
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+		<script src="https://threejs.org/examples/js/controls/PointerLockControls.js"></script>
+		<div id="blocker">
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+			</div>
+		</div>
+		<script>
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+			var controls;
+			var objects = [];
+			var raycaster;
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+			// https://www.html5rocks.com/en/tutorials/pointerlock/intro/
+			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+			if ( havePointerLock ) {
+				var element = document.body;
+				var pointerlockchange = function ( event ) {
+					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+						controlsEnabled = true;
+						controls.enabled = true;
+						blocker.style.display = 'none';
+					} else {
+						controls.enabled = false;
+						blocker.style.display = '-webkit-box';
+						blocker.style.display = '-moz-box';
+						blocker.style.display = 'box';
+						instructions.style.display = '';
+					}
+				};
+				var pointerlockerror = function ( event ) {
+					instructions.style.display = '';
+				};
+				// Hook pointer lock state change events
+				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+				instructions.addEventListener( 'click', function ( event ) {
+					instructions.style.display = 'none';
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+					if ( /Firefox/i.test( navigator.userAgent ) ) {
+						var fullscreenchange = function ( event ) {
+							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+								document.removeEventListener( 'fullscreenchange', fullscreenchange );
+								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+								element.requestPointerLock();
+							}
+						};
+						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+						element.requestFullscreen();
+					} else {
+						element.requestPointerLock();
+					}
+				}, false );
+			} else {
+				instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+			}
+			init();
+			animate();
+			var controlsEnabled = false;
+			var moveForward = false;
+			var moveBackward = false;
+			var moveLeft = false;
+			var moveRight = false;
+			var canJump = false;
+			var prevTime = performance.now();
+			var velocity = new THREE.Vector3();
+			function init() {
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+				var light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
+				light.position.set( 0.5, 1, 0.75 );
+				scene.add( light );
+				controls = new THREE.PointerLockControls( camera );
+				scene.add( controls.getObject() );
+				var onKeyDown = function ( event ) {
+					switch ( event.keyCode ) {
+						case 38: // up
+						case 87: // w
+							moveForward = true;
+							break;
+						case 37: // left
+						case 65: // a
+							moveLeft = true; break;
+						case 40: // down
+						case 83: // s
+							moveBackward = true;
+							break;
+						case 39: // right
+						case 68: // d
+							moveRight = true;
+							break;
+						case 32: // space
+							if ( canJump === true ) velocity.y += 350;
+							canJump = false;
+							break;
+					}
+				};
+				var onKeyUp = function ( event ) {
+					switch( event.keyCode ) {
+						case 38: // up
+						case 87: // w
+							moveForward = false;
+							break;
+						case 37: // left
+						case 65: // a
+							moveLeft = false;
+							break;
+						case 40: // down
+						case 83: // s
+							moveBackward = false;
+							break;
+						case 39: // right
+						case 68: // d
+							moveRight = false;
+							break;
+					}
+				};
+				document.addEventListener( 'keydown', onKeyDown, false );
+				document.addEventListener( 'keyup', onKeyUp, false );
+				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+				// floor
+				geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+				geometry.rotateX( - Math.PI / 2 );
+				for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
+					var vertex = geometry.vertices[ i ];
+					vertex.x += Math.random() * 20 - 10;
+					vertex.y += Math.random() * 2;
+					vertex.z += Math.random() * 20 - 10;
+				}
+				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+					var face = geometry.faces[ i ];
+					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+                }
+                
+                material = new THREE.MeshBasicMaterial( { color: '#aaa'} );
+				mesh = new THREE.Mesh( geometry, material );
+				scene.add( mesh );
+                // objects
+                boxGeom = [10, 50, 100];
+                wallPos = [0, 0, 0];
+				geometry = new THREE.BoxGeometry(boxGeom[0], boxGeom[1], boxGeom[2]);
+                material = new THREE.MeshBasicMaterial( { color: '#ff00fb'} );
+            
+                wall = new THREE.Mesh( geometry, material );
+                wall.position.x = wallPos[0];
+                wall.position.y = wallPos[1];
+                wall.position.z = wallPos[2];
+                wall.castShadow = true;
+                wall.receiveShadow = true;
+                scene.add( wall );
+				
+				//
+				renderer = new THREE.WebGLRenderer();
+				renderer.setClearColor( 0xffffff );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+				//
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			function animate() {
+				requestAnimationFrame( animate );
+				if ( controlsEnabled ) {
+					raycaster.ray.origin.copy( controls.getObject().position );
+					raycaster.ray.origin.y -= 10;
+					var intersections = raycaster.intersectObjects( objects );
+					var isOnObject = intersections.length > 0;
+					var time = performance.now();
+					var delta = ( time - prevTime ) / 1000;
+					velocity.x -= velocity.x * 10.0 * delta;
+					velocity.z -= velocity.z * 10.0 * delta;
+					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+					if ( moveForward ) velocity.z -= 400.0 * delta;
+					if ( moveBackward ) velocity.z += 400.0 * delta;
+					if ( moveLeft ) velocity.x -= 400.0 * delta;
+					if ( moveRight ) velocity.x += 400.0 * delta;
+					if ( isOnObject === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+						canJump = true;
+					}
+					controls.getObject().translateX( velocity.x * delta );
+					controls.getObject().translateY( velocity.y * delta );
+					controls.getObject().translateZ( velocity.z * delta );
+					if ( controls.getObject().position.y < 10 ) {
+						velocity.y = 0;
+						controls.getObject().position.y = 10;
+						canJump = true;
+					}
+					prevTime = time;
+				}
+				renderer.render( scene, camera );
+			}
+		</script>`
 class Scene extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//         space: [],
-//         loaded: false,
-//         artobjects: []
-//     }
-
-    // this.start = this.start.bind(this)
-    // this.stop = this.stop.bind(this)
-    // this.animate = this.animate.bind(this)
-    // this.createPainting = this.createPainting.bind(this)
-    // this.fetchArtObj = this.fetchArtObj.bind(this)
-//   }
-
-  // createPainting(imgUrl, pos, height, width){
-  //   let texture = new THREE.TextureLoader().load(imgUrl)
-  //   texture.wrapS = THREE.RepeatWrapping
-  //   texture.wrapT = THREE.RepeatWrapping
-  //   texture.repeat.set( 1, 1 );
-  //   let geometry = new THREE.BoxGeometry(width, height, 0.1)
-  //   let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
-  //   let cube = new THREE.Mesh(geometry, material)
-  //   cube.position.x = pos
-  //   this.scene.add(cube)
-  // }
-
-//   pushArray(a, e){
-//     a.push(e)
-//     return a
-//   }
-
-//   fetchArtObj(){
-//     let margin = -1.6
-//     this.state.space.artobjects.map(id =>
-//       axios.get(`https://betredeapi.logachev.top/api/artobject/${id}/`)
-//           .then(res => {
-//             this.createPainting(res.data.upload, margin, res.data.height, res.data.width)
-//             margin += 1 + res.data.width
-//             this.setState({
-//               loaded: true
-//             })
-//         })
-//     )
-//   }
-
-
-
   componentDidMount() {
     const spaceID = this.props.match.params.spaceID
     this.props.getScene(spaceID)
 
-    // const width = this.mount.clientWidth
-    // const height = this.mount.clientHeight
-
-    // const scene = new THREE.Scene()
-    // const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000)
-    // const renderer = new THREE.WebGLRenderer({ antialias: true })
-
-    // let geometry = new THREE.BoxGeometry(20, 0.1, 20)
-    // let material = new THREE.MeshBasicMaterial({color: '#fff'})
-    // let floor = new THREE.Mesh(geometry, material)
-    // floor.position.y = -2
-    // scene.add(floor)
-
-    // this.scene = scene
-    // this.camera = camera
-    // this.renderer = renderer
-
-    // // let margin = -1.6
-    // // this.state.artobjects.map(artobject => {
-    // //   this.createPainting(artobject.upload, margin)
-    // //   let margin = margin + 0.5
-    // //   console.log(this.state)
-    // // })
-    // // this.createPainting(this.state.artobjects.upload, -0.6)
-    // // this.createPainting('https://betredeapi.logachev.top/media/jru1z80UvCw.jpg', 0.6)
-
-    // camera.position.z = 3
-    // renderer.setClearColor('pink')
-    // renderer.setSize(width, height)
-
-    // // const controls = new OrbitControls(camera);
-    // // controls.minPolarAngle = Math.PI / 2
-    // // controls.maxPolarAngle = Math.PI / 2
-
-    // const rig = new THREE.Object3D();
-    // rig.add(camera);
-    // scene.add(rig);
-
-    // const controls = new FirstPersonControls(camera, scene, rig);
-    // controls.strafing = true;
-    // const clock = new THREE.Clock()
-
-    // this.controls = controls
-    // this.clock = clock
-
-    // this.mount.appendChild(this.renderer.domElement)
-    // this.start()
-  }
-
-  // componentWillUnmount() {
-  //   this.stop()
-  //   this.mount.removeChild(this.renderer.domElement)
+  //   let mainStyles = document.createElement('style');
+  //   mainStyles.innerHTML = `html, body {
+  //     width: 100%;
+  //     height: 100%;
+  //     cursor: none;
   // }
+  // body {
+  //     background-color: #ffffff;
+  //     margin: 0;
+  //     overflow: hidden;
+  //     font-family: arial;
+  // }
+  // #blocker {
+  //     position: absolute;
+  //     width: 100%;
+  //     height: 100%;
+  //     background-color: rgba(0,0,0,0.5);
+  // }
+  // #instructions {
+  //     cursor: pointer;
+  //     width: 100%;
+  //     height: 100%;
+  //     display: -webkit-box;
+  //     display: -moz-box;
+  //     display: box;
+  //     -webkit-box-orient: horizontal;
+  //     -moz-box-orient: horizontal;
+  //     box-orient: horizontal;
+  //     -webkit-box-pack: center;
+  //     -moz-box-pack: center;
+  //     box-pack: center;
+  //     -webkit-box-align: center;
+  //     -moz-box-align: center;
+  //     box-align: center;
+  //     color: #ffffff;
+  //     text-align: center;
+  //     cursor: pointer;
+  // }`
+  //   document.head.appendChild(mainStyles);
 
-  // start() {
-  //   if (!this.frameId) {
-  //     this.frameId = requestAnimationFrame(this.animate)
+
+  //   let threeJS = document.createElement('script');
+  //   threeJS.setAttribute('src','https://threejs.org/build/three.min.js');
+  //   document.head.appendChild(threeJS);
+
+  //   let threeJSStats = document.createElement('script');
+  //   threeJSStats.setAttribute('src','https://threejs.org/examples/js/libs/stats.min.js');
+  //   document.head.appendChild(threeJSStats);
+
+  //   let pointerLockControls = document.createElement('script');
+  //   pointerLockControls.setAttribute('src','https://threejs.org/examples/js/controls/PointerLockControls.js');
+  //   document.head.appendChild(pointerLockControls);
+
+  //   let mainJS = document.createElement('script');
+  //   mainJS.innerHTML = `var camera, scene, renderer;
+  //   var geometry, material, mesh;
+  //   var controls;
+  //   var objects = [];
+  //   var raycaster;
+  //   var blocker = document.getElementById( 'blocker' );
+  //   var instructions = document.getElementById( 'instructions' );
+  //   // https://www.html5rocks.com/en/tutorials/pointerlock/intro/
+  //   var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+  //   if ( havePointerLock ) {
+  //     var element = document.body;
+  //     var pointerlockchange = function ( event ) {
+  //       if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+  //         controlsEnabled = true;
+  //         controls.enabled = true;
+  //         blocker.style.display = 'none';
+  //       } else {
+  //         controls.enabled = false;
+  //         blocker.style.display = '-webkit-box';
+  //         blocker.style.display = '-moz-box';
+  //         blocker.style.display = 'box';
+  //         instructions.style.display = '';
+  //       }
+  //     };
+  //     var pointerlockerror = function ( event ) {
+  //       instructions.style.display = '';
+  //     };
+  //     // Hook pointer lock state change events
+  //     document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+  //     document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+  //     document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+  //     document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+  //     document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+  //     document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+  //     instructions.addEventListener( 'click', function ( event ) {
+  //       instructions.style.display = 'none';
+  //       // Ask the browser to lock the pointer
+  //       element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+  //       if ( /Firefox/i.test( navigator.userAgent ) ) {
+  //         var fullscreenchange = function ( event ) {
+  //           if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+  //             document.removeEventListener( 'fullscreenchange', fullscreenchange );
+  //             document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+  //             element.requestPointerLock();
+  //           }
+  //         };
+  //         document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+  //         document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+  //         element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+  //         element.requestFullscreen();
+  //       } else {
+  //         element.requestPointerLock();
+  //       }
+  //     }, false );
+  //   } else {
+  //     instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
   //   }
-  // }
+  //   init();
+  //   animate();
+  //   var controlsEnabled = false;
+  //   var moveForward = false;
+  //   var moveBackward = false;
+  //   var moveLeft = false;
+  //   var moveRight = false;
+  //   var canJump = false;
+  //   var prevTime = performance.now();
+  //   var velocity = new THREE.Vector3();
+  //   function init() {
+  //     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+  //     scene = new THREE.Scene();
+  //     scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+  //     var light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
+  //     light.position.set( 0.5, 1, 0.75 );
+  //     scene.add( light );
+  //     controls = new THREE.PointerLockControls( camera );
+  //     scene.add( controls.getObject() );
+  //     var onKeyDown = function ( event ) {
+  //       switch ( event.keyCode ) {
+  //         case 38: // up
+  //         case 87: // w
+  //           moveForward = true;
+  //           break;
+  //         case 37: // left
+  //         case 65: // a
+  //           moveLeft = true; break;
+  //         case 40: // down
+  //         case 83: // s
+  //           moveBackward = true;
+  //           break;
+  //         case 39: // right
+  //         case 68: // d
+  //           moveRight = true;
+  //           break;
+  //         case 32: // space
+  //           if ( canJump === true ) velocity.y += 350;
+  //           canJump = false;
+  //           break;
+  //       }
+  //     };
+  //     var onKeyUp = function ( event ) {
+  //       switch( event.keyCode ) {
+  //         case 38: // up
+  //         case 87: // w
+  //           moveForward = false;
+  //           break;
+  //         case 37: // left
+  //         case 65: // a
+  //           moveLeft = false;
+  //           break;
+  //         case 40: // down
+  //         case 83: // s
+  //           moveBackward = false;
+  //           break;
+  //         case 39: // right
+  //         case 68: // d
+  //           moveRight = false;
+  //           break;
+  //       }
+  //     };
+  //     document.addEventListener( 'keydown', onKeyDown, false );
+  //     document.addEventListener( 'keyup', onKeyUp, false );
+  //     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+  //     // floor
+  //     geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+  //     geometry.rotateX( - Math.PI / 2 );
+  //     for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
+  //       var vertex = geometry.vertices[ i ];
+  //       vertex.x += Math.random() * 20 - 10;
+  //       vertex.y += Math.random() * 2;
+  //       vertex.z += Math.random() * 20 - 10;
+  //     }
+  //     for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+  //       var face = geometry.faces[ i ];
+  //       face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+  //       face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+  //       face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+  //             }
+              
+  //             material = new THREE.MeshBasicMaterial( { color: '#aaa'} );
+  //     mesh = new THREE.Mesh( geometry, material );
+  //     scene.add( mesh );
+  //             // objects
+  //             boxGeom = [10, 50, 100];
+  //             wallPos = [0, 0, 0];
+  //     geometry = new THREE.BoxGeometry(boxGeom[0], boxGeom[1], boxGeom[2]);
+  //             material = new THREE.MeshBasicMaterial( { color: '#ff00fb'} );
+          
+  //             wall = new THREE.Mesh( geometry, material );
+  //             wall.position.x = wallPos[0];
+  //             wall.position.y = wallPos[1];
+  //             wall.position.z = wallPos[2];
+  //             wall.castShadow = true;
+  //             wall.receiveShadow = true;
+  //             scene.add( wall );
+      
+  //     //
+  //     renderer = new THREE.WebGLRenderer();
+  //     renderer.setClearColor( 0xffffff );
+  //     renderer.setPixelRatio( window.devicePixelRatio );
+  //     renderer.setSize( window.innerWidth, window.innerHeight );
+  //     document.body.appendChild( renderer.domElement );
+  //     //
+  //     window.addEventListener( 'resize', onWindowResize, false );
+  //   }
+  //   function onWindowResize() {
+  //     camera.aspect = window.innerWidth / window.innerHeight;
+  //     camera.updateProjectionMatrix();
+  //     renderer.setSize( window.innerWidth, window.innerHeight );
+  //   }
+  //   function animate() {
+  //     requestAnimationFrame( animate );
+  //     if ( controlsEnabled ) {
+  //       raycaster.ray.origin.copy( controls.getObject().position );
+  //       raycaster.ray.origin.y -= 10;
+  //       var intersections = raycaster.intersectObjects( objects );
+  //       var isOnObject = intersections.length > 0;
+  //       var time = performance.now();
+  //       var delta = ( time - prevTime ) / 1000;
+  //       velocity.x -= velocity.x * 10.0 * delta;
+  //       velocity.z -= velocity.z * 10.0 * delta;
+  //       velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+  //       if ( moveForward ) velocity.z -= 400.0 * delta;
+  //       if ( moveBackward ) velocity.z += 400.0 * delta;
+  //       if ( moveLeft ) velocity.x -= 400.0 * delta;
+  //       if ( moveRight ) velocity.x += 400.0 * delta;
+  //       if ( isOnObject === true ) {
+  //         velocity.y = Math.max( 0, velocity.y );
+  //         canJump = true;
+  //       }
+  //       controls.getObject().translateX( velocity.x * delta );
+  //       controls.getObject().translateY( velocity.y * delta );
+  //       controls.getObject().translateZ( velocity.z * delta );
+  //       if ( controls.getObject().position.y < 10 ) {
+  //         velocity.y = 0;
+  //         controls.getObject().position.y = 10;
+  //         canJump = true;
+  //       }
+  //       prevTime = time;
+  //     }
+  //     renderer.render( scene, camera );
+  //   }`;
+  //   document.body.append(mainJS);
 
-  // stop() {
-  //   cancelAnimationFrame(this.frameId)
-  // }
-
-  // animate() {
-  //   // this.controls.update()
-  //   this.controls.update(this.clock.getDelta());
-  //   this.renderScene()
-  //   this.frameId = window.requestAnimationFrame(this.animate)
-  // }
-
-  // renderScene() {
-
-  //   this.renderer.render(this.scene, this.camera)
-  // }
-
-  // render() {
-  //   return (
-  //     <div
-  //       className="scene"
-  //       ref={(mount) => { this.mount = mount }}
-  //     />
-  //   )
-  // }
-
-render() {
-    const { sceneIsLoading, space, artObjects } = this.props
-    
-    return (
-      <Fragment>
-        {
-          sceneIsLoading 
-          ?
-          <h1>Loading...</h1>
-          :
-          <GenerateScene />
-        }
-      </Fragment>
-    )
   }
-}
+
+    render() {
+        return (
+          <div>
+            {renderHTML(htmlShit)}
+          </div>
+        )
+      }
+    }
 
 const mapStateToProps = state => ({
     space: state.artspace.space,
