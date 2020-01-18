@@ -8,3 +8,7 @@ pycparser==2.19
 pyOpenSSL==19.0.0
 pytz==2018.9
 six==1.12.0
+django-cors-headers==2.5.3
+django_filters==0.2.1
+django-filter==2.2.0
+psycopg2==2.8.4

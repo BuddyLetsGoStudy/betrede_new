@@ -13,7 +13,7 @@ SECRET_KEY = '3quvtu!h4fqkkjeq-w8&xq4!2#6rrb=#5o2ga%24o(k6(n!06r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -29,12 +29,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'django_filters',
-
+    'corsheaders',
 
     'frontend',
     'accounts',
     'artspace'
 ]
+
+# uwsgi --http :1488 --home /home/balbes/Env/betrede --chdir /home/balbes/betrede/basic -w basic.wsgi
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'basic.urls'
@@ -123,5 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT  = os.path.join(BASE_DIR, '')
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/'
+CORS_ORIGIN_ALLOW_ALL = True

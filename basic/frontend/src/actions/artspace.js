@@ -56,6 +56,9 @@ export const addSpace = space => (dispatch, getState) => {
     axios
     .post('/api/spaces/', space, tokenConfig(getState))
     .then(res => {
+        console.log(space)
+        console.log(res.data)
+
       dispatch(createMessage({ addSpace: 'Space Added' }))
     })
     .catch(err => {

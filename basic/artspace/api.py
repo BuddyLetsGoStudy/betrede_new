@@ -61,7 +61,7 @@ class SpaceViewSet(viewsets.ModelViewSet):
             artObjectsShadowsIDs.append(newArtObjectShadow.id)
             pos += 1
         print(self.request.data['artObjects'])
-        serializer.save(author=self.request.user, artobjects=artObjectsShadowsIDs)
+        serializer.save(author=self.request.user, artobjects=artObjectsIDs)
 
 class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [

@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import { createMessage } from "../../actions/messages";
 import { getArtObjects, addSpace } from '../../actions/artspace'
 import axios from 'axios'
-
+import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 class SpaceForm extends Component {
     constructor(props){
       super(props) 
 
+      this.cords = [55.74380314679218, 37.7897265625];
       this.artobjects_arr = []
     }
 
@@ -53,15 +54,22 @@ class SpaceForm extends Component {
           description: e.target.elements.description.value,
           artObjects: this.artobjects_arr
         }
+        console.log(space)
         this.props.addSpace(space)
     }
 
+    mapClick = e => {
+      this.cords = e.get('coords');
+      console.log(this.cords);
+      this.forceUpdate();
+    };
+
+
+
     render() {
-      console.log(this.props.artObjects)
       const { artObjects } = this.props
-      console.log(artObjects)
         return (
-          <Fragment>
+          <>
           <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label>Name</label>
@@ -82,7 +90,17 @@ class SpaceForm extends Component {
                 </ul>
               <button type="submit" className="btn btn-primary">Create</button>
             </form>
-          </Fragment>
+            <YMaps
+              enterprise
+              query={{
+                apikey: '2e5ff6ae-71b4-4e26-baec-fbe0a49a07fd',
+              }}
+            >
+                <Map onClick={this.mapClick} defaultState={{ center: [55.75, 37.57], zoom: 9 }}>
+                  <Placemark geometry={this.cords} />
+                </Map>
+            </YMaps>
+          </>
         )
     }
 }

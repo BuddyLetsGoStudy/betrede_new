@@ -22,7 +22,7 @@ class Category(ModelBase):
 
 
 class ArtObject(ModelBase):
-    upload = models.FileField(upload_to='')
+    upload = models.FileField(upload_to='media')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='artobjects', on_delete=models.CASCADE, null=True)
     width = models.FloatField(default=1.0)
