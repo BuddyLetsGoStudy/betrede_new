@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createMessage } from "../../actions/messages";
 import { getArtObjects, addSpace } from '../../actions/artspace'
-import axios from 'axios'
+import axios from 'axios';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 class SpaceForm extends Component {
     constructor(props){
       super(props) 
 
-      this.cords = [55.74380314679218, 37.7897265625];
+      this.cords = [0, 0];
       this.artobjects_arr = []
+      this.state = {cords: null};
     }
 
     static propTypes = {
@@ -42,32 +43,37 @@ class SpaceForm extends Component {
         this.artobjects_arr = this.sliceArray(this.artobjects_arr, id)
         e.target.className = 'artobjects_list'
       }
-      console.log(this.artobjects_arr)
     }
 
     onChange = e => this.setState({[e.target.name]: e.target.value})
 
     onSubmit = e => {
         e.preventDefault()
-        const space = {
-          name: e.target.elements.name.value,
-          description: e.target.elements.description.value,
-          artObjects: this.artobjects_arr
+        const { cords } = this.state;
+        
+        if (cords) {
+          const space = {
+            name: e.target.elements.name.value,
+            description: e.target.elements.description.value,
+            artObjects: this.artobjects_arr,
+            geo: `${cords[0]}, ${cords[1]}`
+          }
+          this.props.addSpace(space);
+        } else {
+          alert('гео-точку раз или вилкой в глаз');
         }
-        console.log(space)
-        this.props.addSpace(space)
     }
 
     mapClick = e => {
       this.cords = e.get('coords');
-      console.log(this.cords);
+      this.state.cords = e.get('coords');
       this.forceUpdate();
     };
 
 
-
     render() {
       const { artObjects } = this.props
+      console.log(this.state.cords, 'lol');
         return (
           <>
           <form onSubmit={this.onSubmit}>
@@ -106,7 +112,7 @@ class SpaceForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    artObjects: state.artspace.artObjects
+    artObjects: state.artspace.artObjects,
 })
 
 export default connect(mapStateToProps, { createMessage, getArtObjects, addSpace })(SpaceForm)

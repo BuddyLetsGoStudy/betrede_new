@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js - pointerlock controls</title>
+		<title>Betrede</title>
+		<link rel="shortcut icon" href="static/frontend/img/favicon.ico">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		
@@ -353,7 +354,7 @@ body {
 								texture.repeat.set( 1, 1 );
 								let incr = 7;
 								if (artPos[i][3] === 1) {
-									let geometry = new THREE.BoxGeometry(0.01, height * incr, width * incr)
+									let geometry = new THREE.BoxGeometry(0.7, height * incr, width * incr)
 									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
 									let cube = new THREE.Mesh(geometry, material)
 									cube.position.x = artPos[i][0];
@@ -361,7 +362,7 @@ body {
 									cube.position.z = artPos[i][2];
 									scene.add(cube)
 								} else {
-									let geometry = new THREE.BoxGeometry(width * incr, height * incr, 0.01)
+									let geometry = new THREE.BoxGeometry(width * incr, height * incr, 0.7)
 									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
 									let cube = new THREE.Mesh(geometry, material)
 									cube.position.x = artPos[i][0];

@@ -131,3 +131,4 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/'
 CORS_ORIGIN_ALLOW_ALL = True
+SECURE_CONTENT_TYPE_NOSNIFF = False

@@ -7,7 +7,7 @@ class Space extends Component {
     const { isAuthenticated } = this.props.auth
     return (
       <Fragment>
-          { isAuthenticated ? <SpaceForm /> : <h1>Loading...</h1>}
+          { isAuthenticated ? <SpaceForm /> : this.props.history.push('/login')}
       </Fragment>
    )
   }

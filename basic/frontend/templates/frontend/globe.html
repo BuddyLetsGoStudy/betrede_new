@@ -2,88 +2,113 @@
     <head>
            <meta charset="utf-8">
            <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-       <script src="https://logachev.top/static/api.js"></script>
-           
-    <script>
-           function initialize() {
+       <script type="application/javascript" src="https://logachev.top/static/api.js"></script>
+       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+           <!-- <link rel="stylesheet" href="https://logachev.top/static/main.css"> -->
    
-               var bounds = [[55.820119, 37.501564], [55.691915, 37.753624]];
-               var earth = new WE.map('earth_div');
-               earth.setView([36.057944835, 112.18688965], 2);
-               var osm = WE.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
-                   attribution: '© OpenStreetMap contributors'
-               }).addTo(earth);
-               fetch(`https://new.betrede.com/api/spaces/`)
-                   .then(response => response.json())
-                   .then(data => {
-                       console.log(data);
-                       data.map(space => {
-                       console.log(space);
-                           var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'markers/artist_painter.png', 30, 30).addTo(earth);
-                           marker.bindPopup(`<b>${space.author}</b><br><span> Gallery</span><a  href='http://new.betrede.com/scene/${space.id}'> Explore</a>`, {maxWidth: 150, closeButton: true});
-                       })
-                   })
-   
-               // var marker = WE.marker([55.740238, 37.634573], 'markers/artist_painter.png', 30, 30).addTo(earth);
-               // marker.bindPopup("<b>Rinat Mustaffin</b><br>Artist.<br /><span> Gallery</span><a  href='/Rinat'> Explore</a>", {maxWidth: 150, closeButton: true});
-   
-               // var marker = WE.marker([55.732020, 37.607471], 'markers/artist_painter.png', 30, 30).addTo(earth);
-               // marker.bindPopup("<b>Artem Syulev</b><br>Artist.<br /><span> Gallery</span><a  href='/Syulev'> Explore</a>", {maxWidth: 150, closeButton: true});
-   
-               // var marker2 = WE.marker([55.788817,  37.705988], 'markers/artist_painter.png', 30, 30).addTo(earth);
-               // marker2.bindPopup("<b>Vladimir Vikhrov</b><br>Creator<br /><span> Gallery</span><a href='/Vikhrov'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker3 = WE.marker([55.766183, 37.633477],  'markers/artist_painter.png', 30, 30).addTo(earth);
-               // marker3.bindPopup("<b>Group Russia</b><br>Group of Artists<br /><span> Gallery</span><a href='/russia'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker4 = WE.marker([55.831403, 37.629064],  'markers/artist_arch.png', 30, 30).addTo(earth);
-               // marker4.bindPopup("<b>VDNH</b><br>Architectural Maket<br /><span> Arhitecture</span><a href='/VDNH'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker5 = WE.marker([55.771459, 37.597428],  'markers/artist_arch.png', 30, 30).addTo(earth);
-               // marker5.bindPopup("<b>betrede.lab</b><br>Architecture<br /><span> Arhitecture</span><a href='/betrede.lab'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker6 = WE.marker([55.745755, 37.627210],  'markers/artist_design.png', 30, 30).addTo(earth);
-               // marker6.bindPopup("<b>betrede.design</b><br>Design<br /><span>Design</span><a href='/betrede.design'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker7 = WE.marker([55.759137, 37.610811],  'markers/artist_design.png', 30, 30).addTo(earth);
-               // marker7.bindPopup("<b>betrede.showbuisnes</b><br>Show<br /><span>Show</span><a href='/betrede.showbuisnes'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               //var marker8 = WE.marker([55.772421, 37.611006],  'markers/artist_design.png', 30, 30).addTo(earth);
-              // marker8.bindPopup("<b>Stereotactic</b><br>event<br /><span>design</span><a href='/stereotactic'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               // var marker9 = WE.marker([55.767586, 37.680975],  'markers/artist_painter.png', 30, 30).addTo(earth);
-               // marker9.bindPopup("<b>Natalie Rukavishnikova</b><br>Gallery<br /><span>Gallery</span><a href='/natalie.rukavishnikova'> Explore</a> ", {maxWidth: 150, closeButton: true});
-   
-               earth.panInsideBounds(bounds);
-           }
-        </script>
        <style>
            html, body{padding: 0; margin: 0;}
            #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
        </style>
-       <title>WebGL Earth API: Maps rendered with MapTiler</title>
+       <title>Betrede</title>
+       <link rel="shortcut icon" href="static/frontend/img/favicon.ico">
    </head>
-   <body onload="initialize()">
-   <div id="earth_div"></div>
-   <script type="text/javascript" src="plugins/jquery.min.js"></script>
-   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-   
-   <!-- Modernizr javascript -->
-   <script type="text/javascript" src="plugins/modernizr.js"></script>
-   
-   <!-- Isotope javascript -->
-   <script type="text/javascript" src="plugins/isotope/isotope.pkgd.min.js"></script>
-   
-   <!-- Backstretch javascript -->
-   <script type="text/javascript" src="plugins/jquery.backstretch.min.js"></script>
-   
-   <!-- Appear javascript -->
-   <script type="text/javascript" src="plugins/jquery.appear.js"></script>
-   
-   <!-- Initialization of Plugins -->
-   <script type="text/javascript" src="js/template.js"></script>
-   
-   <!-- Custom Scripts -->
-   <script type="text/javascript" src="js/custom.js"></script>
+   <header class='mb-3' style="z-index: 2;position: absolute;width: 100%;">
+    <nav class="navbar navbar-expand-lg" style="background:rgba(255,255,255,.5)">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src='/static/frontend/img/logo.png' height="77" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class='nav-item'>
+                    <a href="/space" class="nav-link">Create space</a>
+                </li>
+                <li class='nav-item'>
+                    <a href="/artobject" class="nav-link">Create artobject</a>
+                </li>
+            </ul>
+        </div>
+      </div>
+      </nav>
+      </header>
+    </body>
+   <body onload="initialize()" >
+    
+   <div id="earth_div" style="z-index: 1;"></div>
+
+   <script>
+    function initialize() {
+
+        var bounds = [[55.820119, 37.501564], [55.691915, 37.753624]];
+        var earth = new WE.map('earth_div');
+        earth.setView([36.057944835, 112.18688965], 2);
+        var osm = WE.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(earth);
+        fetch(`https://new.betrede.com/api/spaces/`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                data.map(space => {
+                console.log(space);
+                    var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'http://betrede.com/markers/artist_painter.png', 30, 30).addTo(earth);
+                    marker.bindPopup(`<b>${space.name}</b><br><span> ${space.author}</span><br><a  href='http://new.betrede.com/scene/${space.id}'> Explore</a>`, {maxWidth: 150, closeButton: true});
+                })
+            })
+            .then(() => {
+                const icons = document.getElementsByClassName('we-pm-icon');
+                console.log(icons);
+                for (let icon of icons) {
+                    icon.onclick = () => {
+                        console.log('fuck you;');
+                        for (let mda of document.getElementsByClassName('we-pp')) {
+                            mda.style.visibility = 'hidden';
+                            mda.style.opacity = 0;
+                        }
+                        icon.nextSibling.style.visibility = 'visible';
+                        icon.nextSibling.style.opacity = 1;
+                        console.log(icon.nextSibling);
+                    }
+                }
+            })
+
+        // var marker = WE.marker([55.740238, 37.634573], 'markers/artist_painter.png', 30, 30).addTo(earth);
+        // marker.bindPopup("<b>Rinat Mustaffin</b><br>Artist.<br /><span> Gallery</span><a  href='/Rinat'> Explore</a>", {maxWidth: 150, closeButton: true});
+
+        // var marker = WE.marker([55.732020, 37.607471], 'markers/artist_painter.png', 30, 30).addTo(earth);
+        // marker.bindPopup("<b>Artem Syulev</b><br>Artist.<br /><span> Gallery</span><a  href='/Syulev'> Explore</a>", {maxWidth: 150, closeButton: true});
+
+        // var marker2 = WE.marker([55.788817,  37.705988], 'markers/artist_painter.png', 30, 30).addTo(earth);
+        // marker2.bindPopup("<b>Vladimir Vikhrov</b><br>Creator<br /><span> Gallery</span><a href='/Vikhrov'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker3 = WE.marker([55.766183, 37.633477],  'markers/artist_painter.png', 30, 30).addTo(earth);
+        // marker3.bindPopup("<b>Group Russia</b><br>Group of Artists<br /><span> Gallery</span><a href='/russia'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker4 = WE.marker([55.831403, 37.629064],  'markers/artist_arch.png', 30, 30).addTo(earth);
+        // marker4.bindPopup("<b>VDNH</b><br>Architectural Maket<br /><span> Arhitecture</span><a href='/VDNH'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker5 = WE.marker([55.771459, 37.597428],  'markers/artist_arch.png', 30, 30).addTo(earth);
+        // marker5.bindPopup("<b>betrede.lab</b><br>Architecture<br /><span> Arhitecture</span><a href='/betrede.lab'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker6 = WE.marker([55.745755, 37.627210],  'markers/artist_design.png', 30, 30).addTo(earth);
+        // marker6.bindPopup("<b>betrede.design</b><br>Design<br /><span>Design</span><a href='/betrede.design'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker7 = WE.marker([55.759137, 37.610811],  'markers/artist_design.png', 30, 30).addTo(earth);
+        // marker7.bindPopup("<b>betrede.showbuisnes</b><br>Show<br /><span>Show</span><a href='/betrede.showbuisnes'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        //var marker8 = WE.marker([55.772421, 37.611006],  'markers/artist_design.png', 30, 30).addTo(earth);
+       // marker8.bindPopup("<b>Stereotactic</b><br>event<br /><span>design</span><a href='/stereotactic'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        // var marker9 = WE.marker([55.767586, 37.680975],  'markers/artist_painter.png', 30, 30).addTo(earth);
+        // marker9.bindPopup("<b>Natalie Rukavishnikova</b><br>Gallery<br /><span>Gallery</span><a href='/natalie.rukavishnikova'> Explore</a> ", {maxWidth: 150, closeButton: true});
+
+        earth.panInsideBounds(bounds);
+    }
+ </script>
    </body>
    </html>
