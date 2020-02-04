@@ -12,6 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/BuddyLetsGoStudy/react-django-template.git"
   },
+  
   "author": "@buddyletsgostudy",
   "license": "ISC",
   "bugs": {
