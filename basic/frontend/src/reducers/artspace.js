@@ -1,4 +1,4 @@
-import { ADD_ARTOBJECT, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING } from '../actions/types.js'
+import { ADD_ARTOBJECT, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING, GET_AUTHOR_SPACES } from '../actions/types.js'
 
 const initialState = {
     artObjects: [],
@@ -35,6 +35,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 space: action.payload
+            }
+        case GET_AUTHOR_SPACES:
+            return {
+                ...state,
+                spaces: action.payload
             }
         case SCENE_LOADING:
             return {

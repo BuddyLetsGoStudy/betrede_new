@@ -12,13 +12,16 @@ import AlertTemplate from 'react-alert-template-basic'
 import Header from './layout/Header'
 import Alerts from './layout/Alerts';
 import PrivateContent from './layout/PrivateContent';
-import Login from './accounts/Login'
-import Register from './accounts/Register'
+import Login from './auth/Login'
+import Register from './auth/Register'
 import PrivateRoute from './common/PrivateRoute'
 import ArtObjectForm from './profile/ArtObjectForm'
 import Space from './profile/Space'
 import SpaceList from './list/SpaceList'
 import Scene from './scene/Scene'
+import ProfileDefender from './profile/ProfileDefender'
+import SpaceFormNew from './profile/SpaceFormNew';
+
 
 
 
@@ -43,12 +46,13 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/" component={SpaceList} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/artobject" component={ArtObjectForm} />
-                  <Route exact path="/space" component={Space} />
+                  <Route exact path="/space" component={SpaceFormNew} />
                   <Route exact path='/scene/:spaceID' component={Scene} />
+                  <Route exact path="/profile" component={ProfileDefender} />
+                  <PrivateRoute exact path="/fuckyou" component={PrivateContent} />
                 </Switch>
               </div>
             </Fragment>

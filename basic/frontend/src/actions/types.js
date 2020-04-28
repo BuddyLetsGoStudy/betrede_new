@@ -15,8 +15,10 @@ export const GET_ARTOBJECT = "GET_ARTOBJECT"
 export const ADD_SPACE = "ADD_SPACE"
 export const GET_SPACES = "GET_SPACES"
 export const GET_SPACE = "GET_SPACE"
+export const GET_AUTHOR_SPACES = "GET_AUTHOR_SPACES"
 export const GET_SCENE = "GET_SCENE"
 export const SCENE_LOADING = "SCENE_LOADING"
+
 
 
 

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createMessage } from './messages'
 import { tokenConfig } from './auth'
-import { ADD_ARTOBJECT, GET_ERRORS, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING } from './types'
+import { ADD_ARTOBJECT, GET_ERRORS, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING, GET_AUTHOR_SPACES } from './types'
 
 export const addArtObject = artObject => (dispatch, getState) => {
     axios
@@ -87,6 +87,21 @@ export const getSpaces = () => (dispatch, getState) => {
     .catch(err => console.log(err))
 }
 
+export const getAuthorSpaces = () => (dispatch, getState) => {
+    if (getState().auth.isAuthenticated){
+        const user_id = getState().auth.user.id
+        axios
+        .get(`/api/spaces/?author=${user_id}`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_AUTHOR_SPACES,
+                payload: res.data
+            })
+        })
+        .catch(err => console.log(err))
+    } 
+}
+
 
 export const getSpace = id => (dispatch, getState) => {
     axios
@@ -96,6 +111,15 @@ export const getSpace = id => (dispatch, getState) => {
             type: GET_SPACE,
             payload: res.data
         })
+    })
+    .catch(err => console.log(err))
+}
+
+export const deleteSpace = id => (dispatch, getState) => {
+    axios
+    .delete(`/api/spaces/${id}`, tokenConfig(getState))
+    .then(res => {
+        dispatch(createMessage({ deleteSpace: 'Space deleted' }))
     })
     .catch(err => console.log(err))
 }

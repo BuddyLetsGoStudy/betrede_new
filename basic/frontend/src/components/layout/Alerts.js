@@ -22,7 +22,8 @@ export class Alerts extends Component {
             if(message.deleteLead) alert.success(message.deleteLead)
             if(message.addArtObject) alert.success(message.addArtObject)
             if(message.passwordsNotMatch) alert.error(message.passwordsNotMatch)
-            if(message.addSpace) alert.success(message.addSpace)            
+            if(message.addSpace) alert.success(message.addSpace)   
+            if(message.deleteSpace) alert.error(message.deleteSpace)            
         }
     }
 

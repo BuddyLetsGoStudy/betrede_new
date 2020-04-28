@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getSpaces } from '../../actions/artspace'
-
+import { getAuthorSpaces } from '../../actions/artspace'
+import Card from './Card'
 
 class SpaceList extends Component {
     static propTypes = {
-        getSpaces: PropTypes.func.isRequired,
+        getAuthorSpaces: PropTypes.func.isRequired,
     }
 
     componentDidMount(){
-        this.props.getSpaces()
-     }
+        this.props.getAuthorSpaces()
+    }
 
     render() {
         const { spaces } =  this.props
         return (
-            <div className="row">
+            <div className="space-list">
                 {
-                  spaces && spaces.map(space =>
-                    <Card />
+                  spaces && spaces.length ? spaces.map((space, i) =>
+                    <Card space={space} key={i} />
                   )
+                  :
+                  <a className={"space-list-empty"} href="/space">+ Create your first space right now!</a>
                 }
             </div>
         )
@@ -31,4 +33,4 @@ const mapStateToProps = state => ({
     spaces: state.artspace.spaces
 })
 
-export default connect(mapStateToProps, { getSpaces })(SpaceList)
+export default connect(mapStateToProps, { getAuthorSpaces })(SpaceList)

@@ -7,6 +7,9 @@ urlpatterns = [
    path('register/', views.index),
    path('artobject/', views.index),
    path('space/', views.index),
+   path('profile/', views.index),
+   path('fuckyou/', views.index),
+   path('test/', views.index),
    re_path(r'^jopa/(?P<spaceID>[0-9]+)/$', views.jopa),
    # re_path(r'^scene/(?P<format>[0-9]+)/$', views.scene)
    re_path(r'^scene/(?P<spaceID>[0-9]+)/$', views.jopa)

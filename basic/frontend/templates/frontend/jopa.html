@@ -2,50 +2,60 @@
 <html lang="en">
 	<head>
 		<title>Betrede</title>
-		<link rel="shortcut icon" href="static/frontend/img/favicon.ico">
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+
+		<link rel="apple-touch-icon" sizes="180x180" href="https://new.betrede.com/static/frontend/img/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="https://new.betrede.com/static/frontend/img/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="https://new.betrede.com/static/frontend/img/favicon-16x16.png">
+		<link rel="manifest" href="https://new.betrede.com/static/frontend/img/site.webmanifest">
+		<link rel="shortcut icon" href="https://new.betrede.com/static/frontend/img/favicon.ico">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-config" content="https://new.betrede.com/static/frontend/img/browserconfig.xml">
+		<meta name="theme-color" content="#ffffff">
 		
+		
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	</head>
 	<style>
-	html, body {
-    width: 100%;
-    height: 100%;
-    cursor: none;
-}
-body {
-    background-color: #ffffff;
-    margin: 0;
-    overflow: hidden;
-    font-family: arial;
-}
-#blocker {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
+		html, body {
+		width: 100%;
+		height: 100%;
+		cursor: none;
+		}
+		body {
+			background-color: #ffffff;
+			margin: 0;
+			overflow: hidden;
+			font-family: arial;
+		}
+		#blocker {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0,0,0,0.5);
+		}
 
-#instructions {
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    box-orient: horizontal;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    box-pack: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    box-align: center;
-    color: #ffffff;
-    text-align: center;
-    cursor: pointer;
-}
+		#instructions {
+			cursor: pointer;
+			width: 100%;
+			height: 100%;
+			display: -webkit-box;
+			display: -moz-box;
+			display: box;
+			-webkit-box-orient: horizontal;
+			-moz-box-orient: horizontal;
+			box-orient: horizontal;
+			-webkit-box-pack: center;
+			-moz-box-pack: center;
+			box-pack: center;
+			-webkit-box-align: center;
+			-moz-box-align: center;
+			box-align: center;
+			color: #ffffff;
+			text-align: center;
+			cursor: pointer;
+		}
 	</style>
 	<body>
 		<script src="https://threejs.org/build/three.min.js"></script>
@@ -253,7 +263,6 @@ body {
 				var onKeyUp = function ( event ) {
 
 				switch( event.keyCode ) {
-
 					case 38: // up
 					case 87: // w
 						moveForward = false;
@@ -342,33 +351,52 @@ body {
 					  const artObjectsID = data.artobjects;
 					  console.log(artObjectsID)
 					  artObjectsID.map((id, i) => {
-						fetch(`/api/artobjects/${id}/`)
+						fetch(`/api/artobjectsshadows/${id}/`)
 							.then(response => response.json())
 							.then(data => {
-								const imgUrl = data.upload;
+								const imgUrl = data.artobject.upload;
 								console.log(data);
-								const { width, height } = data;
+								const { width, height } = data.artobject;
+								const artPosition = data.position;
 								let texture = new THREE.TextureLoader().load(imgUrl)
 								texture.wrapS = THREE.RepeatWrapping
 								texture.wrapT = THREE.RepeatWrapping
 								texture.repeat.set( 1, 1 );
 								let incr = 7;
-								if (artPos[i][3] === 1) {
+								if (artPos[artPosition][3] === 1) {
 									let geometry = new THREE.BoxGeometry(0.7, height * incr, width * incr)
-									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
+									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture, specular: 0xffffff, shininess: 10, shading: THREE.FlatShading})
 									let cube = new THREE.Mesh(geometry, material)
-									cube.position.x = artPos[i][0];
-									cube.position.y = artPos[i][1];
-									cube.position.z = artPos[i][2];
+									cube.position.x = artPos[artPosition][0];
+									cube.position.y = artPos[artPosition][1];
+									cube.position.z = artPos[artPosition][2];
 									scene.add(cube)
+
+									let geometryRamka = new THREE.BoxGeometry(0.69, height * incr + 0.2, width * incr + 0.2)
+									let materialRamka = new THREE.MeshPhongMaterial( { color: '#2b2b2b', specular: 0xffffff, shininess: 10, shading: THREE.FlatShading } );
+									let ramka = new THREE.Mesh(geometryRamka, materialRamka)
+									ramka.position.x = artPos[artPosition][0];
+									ramka.position.y = artPos[artPosition][1];
+									ramka.position.z = artPos[artPosition][2];
+									scene.add(ramka)
+								
 								} else {
 									let geometry = new THREE.BoxGeometry(width * incr, height * incr, 0.7)
-									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture})
+									let material = new THREE.MeshBasicMaterial({color: '#fff', map:texture, specular: 0xffffff, shininess: 10, shading: THREE.FlatShading})
 									let cube = new THREE.Mesh(geometry, material)
-									cube.position.x = artPos[i][0];
-									cube.position.y = artPos[i][1];
-									cube.position.z = artPos[i][2];
+									cube.position.x = artPos[artPosition][0];
+									cube.position.y = artPos[artPosition][1];
+									cube.position.z = artPos[artPosition][2];
 									scene.add(cube)
+
+									let geometryRamka = new THREE.BoxGeometry(width * incr + 0.2, height * incr + 0.2, 0.69)
+									let materialRamka = new THREE.MeshPhongMaterial( { color: '#2b2b2b', specular: 0xffffff, shininess: 10, shading: THREE.FlatShading } );
+									let ramka = new THREE.Mesh(geometryRamka, materialRamka)
+									ramka.position.x = artPos[artPosition][0];
+									ramka.position.y = artPos[artPosition][1];
+									ramka.position.z = artPos[artPosition][2];
+									scene.add(ramka)
+								
 								}
 								
 							})

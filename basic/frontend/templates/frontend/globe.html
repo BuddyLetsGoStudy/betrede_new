@@ -12,7 +12,18 @@
            #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
        </style>
        <title>Betrede</title>
-       <link rel="shortcut icon" href="static/frontend/img/favicon.ico">
+       
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://new.betrede.com/static/frontend/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://new.betrede.com/static/frontend/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://new.betrede.com/static/frontend/img/favicon-16x16.png">
+<link rel="manifest" href="https://new.betrede.com/static/frontend/img/site.webmanifest">
+<link rel="shortcut icon" href="https://new.betrede.com/static/frontend/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="https://new.betrede.com/static/frontend/img/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
    </head>
    <header class='mb-3' style="z-index: 2;position: absolute;width: 100%;">
     <nav class="navbar navbar-expand-lg" style="background:rgba(255,255,255,.5)">
@@ -47,7 +58,7 @@
         var bounds = [[55.820119, 37.501564], [55.691915, 37.753624]];
         var earth = new WE.map('earth_div');
         earth.setView([36.057944835, 112.18688965], 2);
-        var osm = WE.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
+        var osm = WE.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
             attribution: '© OpenStreetMap contributors'
         }).addTo(earth);
         fetch(`https://new.betrede.com/api/spaces/`)
@@ -56,8 +67,8 @@
                 console.log(data);
                 data.map(space => {
                 console.log(space);
-                    var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'http://betrede.com/markers/artist_painter.png', 30, 30).addTo(earth);
-                    marker.bindPopup(`<b>${space.name}</b><br><span> ${space.author}</span><br><a  href='http://new.betrede.com/scene/${space.id}'> Explore</a>`, {maxWidth: 150, closeButton: true});
+                    var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'https://betrede.com/markers/artist_painter.png', 30, 30).addTo(earth);
+                    marker.bindPopup(`<b>${space.name}</b><br><span> ${space.author}</span><br><a  href='https://new.betrede.com/scene/${space.id}'> Explore</a>`, {maxWidth: 150, closeButton: true});
                 })
             })
             .then(() => {

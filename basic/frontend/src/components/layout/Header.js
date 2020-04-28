@@ -15,50 +15,27 @@ export class Header extends Component {
     const { isAuthenticated, user } = this.props.auth
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <div className="dropdown show">
-          <a className="dropdown-toggle navbar__user_li" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {user ? `${user.username}` : ""}
-          </a>
-
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a className="dropdown-item" href="/space">Create a space</a>
-            <a className="dropdown-item" href="/artobject">Create an artobject</a>
-            <a className="dropdown-item" onClick={this.props.logout}>Logout</a>
-          </div>
-         </div>
-      </ul>
-      
+      <>
+        <Link to="/profile" className="header-text">My spaces</Link>
+        <Link to="/space" className="header-text">Create</Link>
+        <a className="header-text" onClick={this.props.logout}>Log out</a>
+      </>
     )
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <li className='nav-item'>
-          <Link to="/register" className="nav-link">Register</Link>
-        </li>
-        <li className='nav-item'>
-          <Link to="/login" className="nav-link">Login</Link>
-        </li>
-      </ul>
+      <>
+        <Link to="/register" className="header-text">Sign up</Link>
+        <Link to="/login" className="header-text">Log in</Link>
+      </>
     )
 
     return (
-      <header className='mb-3'>
-      <nav className="navbar navbar-expand-lg" style={{background: 'white'}}>
-        <div className="container">
-          <a className="navbar-brand" href="/">
-            <img src='/static/frontend/img/logo.png' height="77" alt=""/>
-          </a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-          { isAuthenticated ? authLinks : guestLinks}
-          </div>
-          
-        </div>
-        </nav>
-        </header>
+      <header>
+        <div className="header-logo"></div>
+        <div className="header-globe"></div>
+        <div className="header-search"></div>
+        { isAuthenticated ? authLinks : guestLinks }
+      </header>
     )
   }
 }

@@ -12,6 +12,7 @@ class ArtObjectShadowSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArtObjectShadow
         fields = '__all__'
+        depth = 1
 
 
 class SpaceSerializer(serializers.ModelSerializer):
