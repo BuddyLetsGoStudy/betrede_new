@@ -33,7 +33,7 @@ const alertOptions = {
 
 class App extends Component {
   componentDidMount(){
-    store.dispatch(loadUser())
+    console.log(store.dispatch(loadUser()))
   }
 
   render() {
@@ -46,13 +46,12 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
+                  <Route exact path="/edit/space/:spaceID" component={SpaceFormNew} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/artobject" component={ArtObjectForm} />
-                  <Route exact path="/space" component={SpaceFormNew} />
-                  <Route exact path='/scene/:spaceID' component={Scene} />
+                  <PrivateRoute component={<Route exact path="/space" component={SpaceFormNew} />} />
                   <Route exact path="/profile" component={ProfileDefender} />
-                  <PrivateRoute exact path="/fuckyou" component={PrivateContent} />
                 </Switch>
               </div>
             </Fragment>

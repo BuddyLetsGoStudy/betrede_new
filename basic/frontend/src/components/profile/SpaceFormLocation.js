@@ -4,13 +4,12 @@ import { YMaps, Map, Placemark } from 'react-yandex-maps';
 class SpaceFormLocation extends Component {
     constructor(props){
         super(props) 
-        this.state = {cords: [0, 0]};
     }
 
-    mapClick = e => this.setState({cords: e.get('coords')}, this.props.onChangeState('geo', `${this.state.cords[0]}, ${this.state.cords[1]}`));
+    mapClick = e => this.props.onChangeState('geo', e.get('coords'));
 
     render() {
-        const { cords } = this.state;
+        const { geo } = this.props;
         return (
             <div className="space-form-location-cont">
                 <div className="space-form-location-map">
@@ -21,7 +20,7 @@ class SpaceFormLocation extends Component {
                         }}
                         >
                         <Map onClick={this.mapClick} defaultState={{ center: [55.75, 37.57], zoom: 9 }} width={530} height={243}>
-                        <Placemark geometry={cords} />
+                        <Placemark geometry={geo} />
                         </Map>
                     </YMaps>
                 </div>

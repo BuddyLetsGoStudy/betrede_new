@@ -3,7 +3,7 @@
            <meta charset="utf-8">
            <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
        <script type="application/javascript" src="https://logachev.top/static/api.js"></script>
-       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+       <link href="/static/frontend/main.css" rel="stylesheet" >
 
            <!-- <link rel="stylesheet" href="https://logachev.top/static/main.css"> -->
    
@@ -25,28 +25,7 @@
 
 
    </head>
-   <header class='mb-3' style="z-index: 2;position: absolute;width: 100%;">
-    <nav class="navbar navbar-expand-lg" style="background:rgba(255,255,255,.5)">
-      <div class="container">
-        <a class="navbar-brand" href="/">
-          <img src='/static/frontend/img/logo.png' height="77" alt=""/>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                <li class='nav-item'>
-                    <a href="/space" class="nav-link">Create space</a>
-                </li>
-                <li class='nav-item'>
-                    <a href="/artobject" class="nav-link">Create artobject</a>
-                </li>
-            </ul>
-        </div>
-      </div>
-      </nav>
-      </header>
+   <header><a href="/" class="header-logo"></a><div class="header-globe"></div><div class="header-search"></div><a class="header-text" href="/register">Sign up</a><a class="header-text" href="/login">Log in</a></header>
     </body>
    <body onload="initialize()" >
     

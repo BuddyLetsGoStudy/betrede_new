@@ -6,6 +6,12 @@ def index(request):
 def scene(request, format):
     return render(request, 'frontend/index.html')
 
+def space(request, fuck):
+    return render(request, 'frontend/index.html')
+
+def fuckyou(request):
+    return render(request, 'frontend/index.html', {'globe': True})
+
 def jopa(request, spaceID):
     print(spaceID)
     return render(request, 'frontend/jopa.html', {'spaceID': spaceID})

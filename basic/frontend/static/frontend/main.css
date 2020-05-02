@@ -3,6 +3,7 @@ body{
     margin: 0;
   }
   
+
   .space_detail_artobj_cont img{
     max-width: 100%;
   }
@@ -20,26 +21,19 @@ body{
     overflow: hidden;
   }
   
-  .loader{
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index:3;
-    background: white;
-  }
+ 
   
-  .loader img{
-    max-width: 50px;
-  }
+  
   
   .btn_enter{
     float: right;
   }
   #earth_div{
-    height: 600px;
-  
-  width: 500px;
+    height: 100%;
+    width: 100%;
   }
+
+  #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
   
   .nav-link{
     font-weight: 300;
@@ -135,18 +129,7 @@ body{
   #msform fieldset:not(:first-of-type) {
       display: none;
   }
-  
-  #msform input, #msform textarea {
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      margin-bottom: 10px;
-      width: 100%;
-      box-sizing: border-box;
-      font-family: 'Open Sans', sans-serif;
-      color: #2C3E50;
-      font-size: 13px;
-  }
+
   
   #msform .action-button {
       width: 100px;
@@ -280,7 +263,14 @@ body{
 
 
 
-
+  .loader{
+    background-image: url('/static/frontend/img/common/loader.gif');
+    background-size: contain;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    margin-top: 30vh;
+  }
 
 /* =========================HEADER======================== */
 header{
@@ -292,6 +282,7 @@ header{
   margin: auto;
   margin-bottom: 20px;
   z-index: 3;
+  position: relative;
 }
 
 header > :last-child{
@@ -301,10 +292,11 @@ header > :last-child{
 .header-logo{
   width: 173px;
   height: 57.77px;
-  background-image: url('/static/frontend/img/navbar/logo.svg');
+  background-image: url('/static/frontend/img/navbar/logo.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   margin-right: auto;
+  display: block;
 }
 
 .header-globe{
@@ -345,7 +337,7 @@ header > :last-child{
 
 .space-form-title{
   margin: auto;
-  font-size: 32px;
+  font-size: 28px;
   color: #191920;
   margin-bottom: 20px;
 }
@@ -354,7 +346,7 @@ header > :last-child{
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
 }
 
 .space-form-button{
@@ -365,7 +357,12 @@ header > :last-child{
   padding: 11px 70px;
   margin-right: auto;
   cursor: pointer;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  transition: .3s;
+}
+
+.space-form-button:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
 }
 
 .artobject-form-cont{
@@ -396,7 +393,7 @@ header > :last-child{
 }
 
 .artobject-form-add-pic{
-  border: 1px dashed #191920;
+  outline: 1px dashed #191920;
   cursor: pointer;
   height: 100px;
   width: 100px;
@@ -411,7 +408,7 @@ header > :last-child{
 
 .artobject-form-add-pic:hover{
   background-image: url('/static/frontend/img/spaceForm/plusHover.svg');
-  border-color: #0000FF;
+  outline-color: #0000FF;
 }
 
 .artobject-form-plushover{
@@ -457,6 +454,18 @@ header > :last-child{
   cursor: pointer;
 }
 
+.artobject-form-add-pic-pencil{
+  display: none;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  background-color: rgba(248, 248, 248, 0.88);
+  background-image: url('/static/frontend/img/spaceForm/pencil.svg');
+  background-size: 40px 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .artobject-form-add-model{
   width: 78px;
   height: 73px;
@@ -469,7 +478,7 @@ header > :last-child{
 }
 
 .artobject-form-modal-bg{
-  z-index: 2;
+  z-index: 3;
   position: fixed;
   top: 0px;
   left: 0;
@@ -508,6 +517,10 @@ header > :last-child{
   max-height: 100%;
 }
 
+.artobject-form-modal-form > input:focus{
+  outline: none;
+}
+
 .artobject-form-modal-name{
   color: #191920;
   font-size: 19px;
@@ -533,16 +546,45 @@ header > :last-child{
   margin-right: 50px;
 }
 
+
+.artobject-form-modal-buttons{
+  display: flex;
+  align-items: center;
+}
+
+.artobject-form-modal-delete{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 19px;
+  color: #7D7D7D;
+  cursor: pointer;
+}
+
+.artobject-form-modal-delete-cross{
+  width: 16.97px;
+  height: 16.97px;
+  background-image: url('/static/frontend/img/spaceForm/crossRed.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: 6px;
+}
+
 .artobject-form-modal-button{
   background: #6840FF;
   border-radius: 43px;
   color: white;
   font-size: 19px;
   padding: 11px 70px;
-  margin-right: auto;
   cursor: pointer;
   border: 0;
+  transition: .3s;
 }
+
+.artobject-form-modal-button:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
+}
+
 
 .artobject-form-modal-file{
   width: 146px;
@@ -561,6 +603,18 @@ header > :last-child{
   cursor: pointer;
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.artobject-form-modal-file-plus{
+  display: none;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(248, 248, 248, 0.88);
+  position: absolute;
+  background-image: url("/static/frontend/img/spaceForm/plusHover.svg");
+  background-size: 90px 90px;
+  background-position: center center;
   background-repeat: no-repeat;
 }
 
@@ -624,7 +678,7 @@ header > :last-child{
 
 .space-form-meta-info-form-description{
   outline: none;
-  padding: 11px 27px;
+  padding: 11px 30px;
   color: #191920;
   border: 1px solid #B6B6B6;
   box-sizing: border-box;
@@ -653,10 +707,23 @@ header > :last-child{
   width: calc(100% - 60px);
 }
  
+.space-form-location-cont{
+  margin-bottom: 20px;
+}
 .space-form-location-map{
-  margin-bottom: 30px;
   height: 243px;
   width: 530px;
   background: #F8F8F8;
 }
   
+
+/* ==============================LOGIN FORM================== */
+.login-form{
+  width: 380px;
+}
+.login-form-title{
+  color: #191920;
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}

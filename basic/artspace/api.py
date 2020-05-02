@@ -23,6 +23,24 @@ class ArtObjectViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
+    # def partial_update(self, request, *args, **kwargs):
+    #     print(self.request.data)
+    #     self.serializer.save(partial=True)
+        # instance = self.get_object()
+        # serializer = self.serializer(instance, data=request.data, partial=True)
+        # serializer.save(instance, data=request.data, partial=True)
+
+        # new_instance = serializer.save()
+        # return Response(serializer.data)
+
+        # try:
+        #     instance = self.get_object()
+        #     if self.request.user == instance.author:
+        #         self.perform_destroy(instance)
+        # except Http404:
+        #     pass
+
+
 class ArtObjectShadowViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.AllowAny

@@ -31,7 +31,7 @@ export class Header extends Component {
 
     return (
       <header>
-        <div className="header-logo"></div>
+        <a href="/" className="header-logo" />
         <div className="header-globe"></div>
         <div className="header-search"></div>
         { isAuthenticated ? authLinks : guestLinks }

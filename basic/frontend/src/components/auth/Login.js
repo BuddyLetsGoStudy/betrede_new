@@ -28,42 +28,65 @@ export class Login extends Component {
         }
         const { username, password } = this.state
         return (
-          <div className="col-md-8 col-md-offset-2 mx-auto">
-            <div className="msform">
-                <div className="fieldset">
-                    <form id="msform" onSubmit={this.onSubmit}>
-                      <fieldset>
-                          <h2 className="fs-title">Login</h2>
-                          <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control logreg_input"
-                                name="username"
-                                onChange={this.onChange}
-                                value={username}
-                                placeholder="Enter username"
-                                autoFocus 
-                                required
-                              />
-                           </div>
-                           <div className="form-group">
-                              <input
-                                type="password"
-                                className="form-control logreg_input" 
-                                name="password"
-                                onChange={this.onChange}
-                                value={password}
-                                placeholder="Password" 
-                                required
-                              />
-                          </div>
-                          <input type="submit" name="submit" className="submit" value="CONFIRM" />
-                          <a href="#">Forgot password?</a>
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
-              </div>
+          <form className="login-form">
+            <div className="login-form-title">Log In</div>
+            <input 
+              type="text"
+              className="login-form-username"  
+              name="username"
+              onChange={this.onChange}
+              value={username}
+              placeholder="Login or Email Address"
+              autoFocus 
+              required />
+            <input
+              type="password"
+              className="login-form-password" 
+              name="password"
+              onChange={this.onChange}
+              value={password}
+              placeholder="Password" 
+              required
+            />
+            <button className="login-form-button">Log In</button>
+            <Link to="/register" className="login-form-reg-link">New? Create a free account</Link>
+          </form>
+          // <div className="col-md-8 col-md-offset-2 mx-auto">
+          //   <div className="msform">
+          //       <div className="fieldset">
+          //           <form id="msform" onSubmit={this.onSubmit}>
+          //             <fieldset>
+          //                 <h2 className="fs-title">Login</h2>
+          //                 <div className="form-group">
+          //                     <input
+          //                       type="text"
+          //                       className="form-control logreg_input"
+          //                       name="username"
+          //                       onChange={this.onChange}
+          //                       value={username}
+          //                       placeholder="Enter username"
+          //                       autoFocus 
+          //                       required
+          //                     />
+          //                  </div>
+          //                  <div className="form-group">
+                              // <input
+                              //   type="password"
+                              //   className="form-control logreg_input" 
+                              //   name="password"
+                              //   onChange={this.onChange}
+                              //   value={password}
+                              //   placeholder="Password" 
+                              //   required
+                              // />
+          //                 </div>
+          //                 <input type="submit" name="submit" className="submit" value="CONFIRM" />
+          //                 <a href="#">Forgot password?</a>
+          //             </fieldset>
+          //           </form>
+          //         </div>
+          //       </div>
+          //     </div>
         )
     }
 }

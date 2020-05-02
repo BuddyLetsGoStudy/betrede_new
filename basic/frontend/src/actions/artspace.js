@@ -52,6 +52,15 @@ export const getArtObject = id => (dispatch, getState) => {
     .catch(err => console.log(err))
 }
 
+export const deleteArtObject = id => (dispatch, getState) => {
+    axios
+    .delete(`/api/artobjects/${id}`, tokenConfig(getState))
+    .then(res => {
+       console.log('deleted');
+    })
+    .catch(err => console.log(err))
+}
+
 export const addSpace = space => (dispatch, getState) => {
     axios
     .post('/api/spaces/', space, tokenConfig(getState))
@@ -104,15 +113,18 @@ export const getAuthorSpaces = () => (dispatch, getState) => {
 
 
 export const getSpace = id => (dispatch, getState) => {
-    axios
-    .get(`/api/spaces/${id}`, tokenConfig(getState))
-    .then(res => {
-        dispatch({
-            type: GET_SPACE,
-            payload: res.data
+    return new Promise((resolve, reject) => {
+        axios
+        .get(`/api/spaces/${id}`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_SPACE,
+                payload: res.data
+            })
+            resolve(res.data)
         })
-    })
-    .catch(err => console.log(err))
+        .catch(err => reject(err))
+    });
 }
 
 export const deleteSpace = id => (dispatch, getState) => {
@@ -134,29 +146,25 @@ export const getScene = id => (dispatch, getState) => {
         const artObjectsShadowsIDs = res.data.artobjects
         const artObjectsShadowsData = []
         const artObjectsData = []
-        artObjectsShadowsIDs.map(artObjectShadowID => 
+        artObjectsShadowsIDs.map(artObjectShadowID => {
             axios
             .get(`/api/artobjectsshadows/${artObjectShadowID}`, tokenConfig(getState))
             .then(res => {
+                console.log(res.data)
                 artObjectsShadowsData.push(res.data)
-                let artObjectID = res.data.artobject
-                axios
-                .get(`/api/artobjects/${artObjectID}`, tokenConfig(getState))
-                .then(res => {
-                    artObjectsData.push(res.data)
-                })
+                artObjectsData.push(res.data)
             })
             .then(() => {
                 if(artObjectShadowID === artObjectsShadowsIDs[artObjectsShadowsIDs.length - 1]){
-                    console.log(artObjectsData)
-                    console.log(artObjectsShadowsData)
+                    // console.log(artObjectsData)
+                    // console.log(artObjectsShadowsData)
                     dispatch({
                         type: GET_SCENE,
                         payload: { sceneData, artObjectsData, artObjectsShadowsData }
                     })
                 }
             })
-        )
+        })
         
     })
 
