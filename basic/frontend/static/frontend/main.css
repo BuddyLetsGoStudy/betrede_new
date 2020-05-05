@@ -1,6 +1,11 @@
 body{
-    font-family: 'Roboto', sans-serif;
+   
     margin: 0;
+  }
+
+  *{
+    font-family: 'Roboto', sans-serif!important;
+    -webkit-font-smoothing: antialiased;
   }
   
 
@@ -209,58 +214,102 @@ body{
     cursor: pointer;
   }
 
-  .space-list{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    box-shadow: 0 0 10px 0 rgba(112, 112, 112, 0.88);
-    padding: 42px;
-  }
+  /* ==================================MYSPACES ===========*/
 
-  .space-list > :last-child{
-    margin-bottom: 0;
-  }
+.space-list{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 10px;
+}
 
-  .space-list-empty{
-    text-align: center;
-    color: #707070;
-    font-size: 16px;
-    font-weight: bold;
-  }
+.space-list > :last-child{
+  border-bottom: 0;
+}
 
-  .space-card{
-    display: flex;
-    border-bottom: 1px solid #707070;
-    margin-bottom: 20px;
-    color: #707070;
-    padding: 20px;
-  }
-
-  .space-card-title{
-    font-size: 14px;
-    color: #707070;
-    margin-right: 90px;
-    width: 10%;
-    display: flex;
-    align-items: center;
-  }
+.space-list-title{
+  font-size: 32px;
+  text-align: center;
+  color: #191920;
+  margin-bottom: 20px;
+}
 
 
-  .space-card-btn{
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    background-color: #ffffff;
-    display: flex;
-    font-size: 14px;
-    color: #707070;
-    margin-right: 30px;
-    padding: 4px 20px;
-    cursor: pointer;
-  }
 
-  .space-card-btn-delete{
-    margin-left: auto;
-  }
 
+.space-card{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #191920;
+  border-bottom: 1px solid #DFDFDF;
+  height: 149px;
+  width: 100%;
+}
+
+.space-card-avatar{
+  background: #F0F0F0;
+  border: 1px solid #B6B6B6;
+  width: 128.95px;
+  height: 128.95px;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.space-card-title{
+  font-size: 19px;
+  color: #191920;
+  width: 330px;
+}
+
+.space-card-button{
+  width: 120px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
+  border-radius: 43px;
+  margin-right: 20px;
+  padding: 13.5px 0;
+  text-align: center;
+  font-size: 15px;
+  line-height: 18px;
+  cursor: pointer;
+  color: #191920;
+  text-decoration: none;
+}
+
+.space-card-publish{
+  width: 180px;
+  margin-right: 20px;
+  background: #6840FF;
+  border-radius: 43px;
+  padding: 11px 0;
+  text-align: center;
+  transition: .3s;
+  color: #FFFFFF;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.space-card-publish:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
+}
+
+
+.space-card-button-delete{
+  cursor: pointer;
+  width: 27px;
+  height: 27px;
+  background-image: url('/static/frontend/img/common/trash.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.space-list-empty{
+  margin: auto;
+  margin-top: 20px;
+  text-decoration: none;
+}
 
 
   .loader{
@@ -292,7 +341,7 @@ header > :last-child{
 .header-logo{
   width: 173px;
   height: 57.77px;
-  background-image: url('/static/frontend/img/navbar/logo.png');
+  background-image: url('/static/frontend/img/navbar/logo.svg');
   background-repeat: no-repeat;
   background-size: contain;
   margin-right: auto;
@@ -517,7 +566,7 @@ header > :last-child{
   max-height: 100%;
 }
 
-.artobject-form-modal-form > input:focus{
+input:focus{
   outline: none;
 }
 
@@ -720,10 +769,170 @@ header > :last-child{
 /* ==============================LOGIN FORM================== */
 .login-form{
   width: 380px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
 }
+
 .login-form-title{
   color: #191920;
   text-align: center;
   font-size: 32px;
   margin-bottom: 40px;
+}
+
+.login-form > div{
+  position: relative;
+}
+
+.login-form > div > input{
+  color: #191920;
+  font-size: 19px;
+  border: 0;
+  border-bottom: 1px solid #A3A3A3;
+  padding: 0px 30px 10px 37px;
+  margin-bottom: 30px;
+  position: relative;
+  width: 313px;
+}
+
+.login-form-username::before{
+  position: absolute;
+  content: "";
+  top: 2px;
+  left: 9px;
+  width: 11px;
+  height: 12px;
+  background-image: url('/static/frontend/img/logreg/user.svg');
+  z-index: 1;
+}
+
+.login-form-password::before{
+  position: absolute;
+  content: "";
+  top: 2px;
+  left: 9px;
+  width: 11px;
+  height: 12px;
+  background-image: url('/static/frontend/img/logreg/password.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.login-form-button{
+  background: #6840FF;
+  border-radius: 43px;
+  color: white;
+  font-size: 19px;
+  width: 180px;
+  padding: 11px 0px;
+  text-align: center;
+  margin-right: auto;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: .3s;
+  border: 0;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.login-form-button:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
+}
+
+.login-form-reg-link{
+  color: #6840FF;
+  font-size: 19px;
+}
+
+
+/* ==============================REG FORM================== */
+.register-form{
+  width: 380px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+.register-form-title{
+  color: #191920;
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.register-form > div{
+  position: relative;
+}
+
+.register-form > div > input{
+  color: #191920;
+  font-size: 19px;
+  border: 0;
+  border-bottom: 1px solid #A3A3A3;
+  padding: 0px 30px 10px 37px;
+  margin-bottom: 30px;
+  position: relative;
+  width: 313px;
+}
+
+.register-form-email::before{
+  position: absolute;
+  content: "";
+  top: 6px;
+  left: 9px;
+  width: 11px;
+  height: 12px;
+  background-image: url('/static/frontend/img/logreg/email.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+}
+
+.register-form-username::before{
+  position: absolute;
+  content: "";
+  top: 2px;
+  left: 9px;
+  width: 11px;
+  height: 12px;
+  background-image: url('/static/frontend/img/logreg/user.svg');
+  z-index: 1;
+}
+
+.register-form-password::before{
+  position: absolute;
+  content: "";
+  top: 2px;
+  left: 9px;
+  width: 11px;
+  height: 12px;
+  background-image: url('/static/frontend/img/logreg/password.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.register-form-button{
+  background: #6840FF;
+  border-radius: 43px;
+  color: white;
+  font-size: 19px;
+  width: 180px;
+  padding: 11px 0px;
+  text-align: center;
+  margin-right: auto;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: .3s;
+  border: 0;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.register-form-button:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
 }

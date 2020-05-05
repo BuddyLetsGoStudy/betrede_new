@@ -45,7 +45,7 @@ class SpaceFormNew extends Component {
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps !== this.props) {
+        if (prevProps !== this.props && this.props.space) {
             const { space, artObjectsRedux, sceneIsLoading } = this.props;
             const { name, description, geo } = space;
             this.setState({name, description, artObjectsRedux, geo: [parseFloat(geo.split(',')[0], 10), parseFloat(geo.split(',')[1], 10)]})

@@ -55,30 +55,7 @@ class ArtObjectForm extends Component {
         const { name, description, width, height } = this.state
         return (
         <div>
-            <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input type='text' name='name' className="form-control" placeholder="Name of your artwork" onChange={this.onChange} value={name} required/>
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <input type='text' name='description' className="form-control" placeholder="Description" onChange={this.onChange} value={description} required/>
-                </div>
-
-                <div className="form-group">
-                    <label>Width</label>
-                    <input type='number' name='width' className="form-control" placeholder="In metres" onChange={this.onChange} value={width} required/>
-                </div>
-                <div className="form-group">
-                    <label>Height</label>
-                    <input type='number' name='height' className="form-control" placeholder="In metres" onChange={this.onChange} value={height} required/>
-                </div>
-                <div className="form-group">
-                    <label>Upload your artwork</label>
-                    <input type="file" className="form-control-file" name='upload' required />
-                </div>
-                <button type="submit" className="btn btn-primary">Create</button>
-            </form>
+          fukc tou
         </div>
         )
     }

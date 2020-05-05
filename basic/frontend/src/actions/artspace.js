@@ -42,7 +42,7 @@ export const getArtObjects = () => (dispatch, getState) => {
 
 export const getArtObject = id => (dispatch, getState) => {
     axios
-    .get(`/api/artobjects/${id}`, tokenConfig(getState))
+    .get(`/api/artobjects/${id}/`, tokenConfig(getState))
     .then(res => {
         dispatch({
             type: GET_ARTOBJECT,
@@ -54,7 +54,7 @@ export const getArtObject = id => (dispatch, getState) => {
 
 export const deleteArtObject = id => (dispatch, getState) => {
     axios
-    .delete(`/api/artobjects/${id}`, tokenConfig(getState))
+    .delete(`/api/artobjects/${id}/`, tokenConfig(getState))
     .then(res => {
        console.log('deleted');
     })
@@ -115,7 +115,7 @@ export const getAuthorSpaces = () => (dispatch, getState) => {
 export const getSpace = id => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         axios
-        .get(`/api/spaces/${id}`, tokenConfig(getState))
+        .get(`/api/spaces/${id}/`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_SPACE,
@@ -129,7 +129,7 @@ export const getSpace = id => (dispatch, getState) => {
 
 export const deleteSpace = id => (dispatch, getState) => {
     axios
-    .delete(`/api/spaces/${id}`, tokenConfig(getState))
+    .delete(`/api/spaces/${id}/`, tokenConfig(getState))
     .then(res => {
         dispatch(createMessage({ deleteSpace: 'Space deleted' }))
     })
@@ -140,7 +140,7 @@ export const getScene = id => (dispatch, getState) => {
     dispatch({ type: SCENE_LOADING })
 
     axios
-    .get(`/api/spaces/${id}`, tokenConfig(getState))
+    .get(`/api/spaces/${id}/`, tokenConfig(getState))
     .then(res => {
         const sceneData = res.data
         const artObjectsShadowsIDs = res.data.artobjects
@@ -148,7 +148,7 @@ export const getScene = id => (dispatch, getState) => {
         const artObjectsData = []
         artObjectsShadowsIDs.map(artObjectShadowID => {
             axios
-            .get(`/api/artobjectsshadows/${artObjectShadowID}`, tokenConfig(getState))
+            .get(`/api/artobjectsshadows/${artObjectShadowID}/`, tokenConfig(getState))
             .then(res => {
                 console.log(res.data)
                 artObjectsShadowsData.push(res.data)

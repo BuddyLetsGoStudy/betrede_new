@@ -47,11 +47,14 @@ class App extends Component {
               <div className="container">
                 <Switch>
                   <Route exact path="/edit/space/:spaceID" component={SpaceFormNew} />
-                  <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/artobject" component={ArtObjectForm} />
-                  <PrivateRoute component={<Route exact path="/space" component={SpaceFormNew} />} />
-                  <Route exact path="/profile" component={ProfileDefender} />
+                  <Route exact path="/register" component={Register} />
+                  {/* <Route exact path="/myspaces" component={SpaceList} /> */}
+                  <Route exact path="/space" component={SpaceFormNew} />
+      
+                  <PrivateRoute component={<Route exact path="/myspaces" component={SpaceList} />} />
+                  {/* <PrivateRoute component={<Route exact path="/space" component={SpaceFormNew} />} />  */}
+           
                 </Switch>
               </div>
             </Fragment>
