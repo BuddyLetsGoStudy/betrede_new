@@ -126,10 +126,11 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 8388608
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT  = os.path.join(BASE_DIR, '')
+# MEDIA_ROOT  = os.path.join(BASE_DIR, '')
 STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
-
-MEDIA_URL = '/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/'
 CORS_ORIGIN_ALLOW_ALL = True
 SECURE_CONTENT_TYPE_NOSNIFF = False
 
