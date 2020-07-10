@@ -18,6 +18,9 @@ export const GET_SPACE = "GET_SPACE"
 export const GET_AUTHOR_SPACES = "GET_AUTHOR_SPACES"
 export const GET_SCENE = "GET_SCENE"
 export const SCENE_LOADING = "SCENE_LOADING"
+export const SCENE_LOADED = "SCENE_LOADED"
+export const ARTOBJECT_LOADING = "ARTOBJECT_LOADING"
+
 
 
 

@@ -12,7 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/BuddyLetsGoStudy/react-django-template.git"
   },
-  
   "author": "@buddyletsgostudy",
   "license": "ISC",
   "bugs": {
@@ -35,6 +34,7 @@
     "@fabienmotte/three-first-person-controls": "^73.0.1",
     "axios": "^0.18.0",
     "first-person-controls": "^1.0.1",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-alert": "^5.2.0",

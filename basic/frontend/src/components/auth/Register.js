@@ -11,7 +11,8 @@ export class Register extends Component {
         username: '',
         email: '',
         password: '',
-        password2: ''
+        password2: '',
+        invatationCode: ''
     }
 
     static propTypes = {
@@ -38,9 +39,9 @@ export class Register extends Component {
 
     render() {
         if(this.props.isAuthenticated){
-          return <Redirect to="/space" />
+          return <Redirect to="/myspaces" />
         }
-        const { username, email, password, password2 } = this.state
+        const { username, email, password, password2, invatationCode } = this.state
         return (
           <form className="register-form" onSubmit={this.onSubmit}>
             <div className="register-form-title">Create a free account</div>
@@ -78,6 +79,16 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password2}
                 placeholder="Confirm password"
+              />
+            </div>
+            <div className="register-form-key">
+              <input
+                type="password"
+                name="invatationCode"
+                onChange={this.onChange}
+                value={invatationCode}
+                placeholder="Invitation Key"
+                minLength={7}
               />
             </div>
             <button className="register-form-button">Create account</button>

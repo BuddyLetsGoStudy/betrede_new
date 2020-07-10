@@ -24,7 +24,7 @@ export class Login extends Component {
 
     render() {
         if(this.props.isAuthenticated){
-          return <Redirect to ="/space" />
+          return <Redirect to ="/myspaces" />
         }
         const { username, password } = this.state
         return (
@@ -50,6 +50,7 @@ export class Login extends Component {
               />
             </div>
             <button className="login-form-button">Log In</button>
+            <Link to="/reset" className="login-form-reset-link">Forgot your password?</Link>
             <Link to="/register" className="login-form-reg-link">New? Create a free account</Link>
           </form>
           // <div className="col-md-8 col-md-offset-2 mx-auto">

@@ -20,7 +20,7 @@ class SpaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Space
-        fields = ['id', 'name', 'description', 'created', 'geo', 'views', 'author', 'artobjects']
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):

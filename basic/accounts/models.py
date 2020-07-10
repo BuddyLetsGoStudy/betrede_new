@@ -1,3 +1,6 @@
+
 from django.db import models
 
-# Create your models here.
+class Token(models.Model):
+    email = models.TextField()
+    token = models.CharField(max_length=40)

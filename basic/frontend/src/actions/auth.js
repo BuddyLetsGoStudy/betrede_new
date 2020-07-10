@@ -64,6 +64,7 @@ export const logout = () => (dispatch, getState) => {
           dispatch({
               type: LOGOUT_SUCCESS
           })
+          window.location.href = "https://betrede.com";
       })
       .catch(err => {
         dispatch(returnErrors(err.response.data, err.response.status));
@@ -111,4 +112,25 @@ export const tokenConfig = getState => {
   
     return config;
   }
+
+
+  export const resetPassword = email => (dispatch, getState) => {
+    axios
+    .post(`/api/auth/reset`, {email}, tokenConfig(getState))
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(err => console.log(err))
+  }
+
+
+  export const updatePassword = (token, password) => (dispatch, getState) => {
+    axios
+    .post(`/api/auth/update`, {token, password}, tokenConfig(getState))
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(err => console.log(err))
+  }
+
 

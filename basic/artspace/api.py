@@ -26,19 +26,19 @@ class ArtObjectViewSet(viewsets.ModelViewSet):
     # def partial_update(self, request, *args, **kwargs):
     #     print(self.request.data)
     #     self.serializer.save(partial=True)
-        # instance = self.get_object()
-        # serializer = self.serializer(instance, data=request.data, partial=True)
-        # serializer.save(instance, data=request.data, partial=True)
+    #     instance = self.get_object()
+    #     serializer = self.serializer(instance, data=request.data, partial=True)
+    #     serializer.save(instance, data=request.data, partial=True)
 
-        # new_instance = serializer.save()
-        # return Response(serializer.data)
+    #     new_instance = serializer.save()
+    #     return Response(serializer.data)
 
-        # try:
-        #     instance = self.get_object()
-        #     if self.request.user == instance.author:
-        #         self.perform_destroy(instance)
-        # except Http404:
-        #     pass
+    #     try:
+    #         instance = self.get_object()
+    #         if self.request.user == instance.author:
+    #             self.perform_destroy(instance)
+    #     except Http404:
+    #         pass
 
 
 class ArtObjectShadowViewSet(viewsets.ModelViewSet):
@@ -98,6 +98,38 @@ class SpaceViewSet(viewsets.ModelViewSet):
         except Http404:
             pass
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def partial_update(self, request, pk):
+        space = Space.objects.get(id=pk)
+        print(space)
+        if self.request.data['partial']:
+            space.published = self.request.data['publishing']
+            space.save()
+        else:
+            space.name = self.request.data['name']
+            space.description = self.request.data['description']
+            space.geo = self.request.data['geo']
+
+            artObjectsIDs = self.request.data['artObjects']
+            space.artobjects.set([])
+            if artObjectsIDs:
+                pos = 1
+                artObjectsShadowsIDs = []
+                for artObjectID in artObjectsIDs:
+                    if artObjectID != 0:
+                        artObject = ArtObject.objects.get(id=int(artObjectID))
+                        newArtObjectShadow = ArtObjectShadow(artobject=artObject,position=pos)
+                        newArtObjectShadow.save()
+                        space.artobjects.add(newArtObjectShadow.id)
+                        artObjectsShadowsIDs.append(newArtObjectShadow.id)
+                    pos += 1
+
+            print(artObjectsShadowsIDs)
+            # space.artobjects.set(*artObjectsShadowsID)
+            space.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
     def get_permissions(self):
         if self.action == 'destroy':

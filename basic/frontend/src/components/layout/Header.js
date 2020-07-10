@@ -17,7 +17,7 @@ export class Header extends Component {
     const authLinks = (
       <>
         <Link to="/myspaces" className="header-text">My spaces</Link>
-        <Link to="/space" className="header-text">Create</Link>
+        <Link to="/create" className="header-text">Create</Link>
         <a className="header-text" onClick={this.props.logout}>Log out</a>
       </>
     )

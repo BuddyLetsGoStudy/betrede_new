@@ -1,10 +1,11 @@
-import { ADD_ARTOBJECT, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING, GET_AUTHOR_SPACES } from '../actions/types.js'
+import { ADD_ARTOBJECT, GET_ARTOBJECTS, GET_SPACES, GET_SPACE, GET_ARTOBJECT, GET_SCENE, SCENE_LOADING, GET_AUTHOR_SPACES, SCENE_LOADED, ARTOBJECT_LOADING } from '../actions/types.js'
 
 const initialState = {
     artObjects: [],
     spaces: [],
     artObjectsShadows: [],
-    sceneIsLoading: true
+    sceneIsLoading: true,
+    artObjectIsLoading: false
 }
 
 export default function(state = initialState, action) {
@@ -14,6 +15,11 @@ export default function(state = initialState, action) {
                 ...state,
                 artObjects: action.payload
             }
+        case ARTOBJECT_LOADING:
+            return{
+                ...state,
+                artObjectIsLoading: action.payload
+        }
         case GET_ARTOBJECTS:
             console.log(action.payload)
             return {
@@ -45,6 +51,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 sceneIsLoading: true
+            }
+        case SCENE_LOADED:
+            return {
+                ...state,
+                sceneIsLoading: false
             }
         case GET_SCENE:
             return {

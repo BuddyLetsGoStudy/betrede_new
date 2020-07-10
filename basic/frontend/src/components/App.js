@@ -13,16 +13,20 @@ import Header from './layout/Header'
 import Alerts from './layout/Alerts';
 import PrivateContent from './layout/PrivateContent';
 import Login from './auth/Login'
+import Logout from './auth/Logout';
+import ResetPassword from './auth/ResetPassword'
+import RecoveryLink from './auth/RecoveryLink'
 import Register from './auth/Register'
 import PrivateRoute from './common/PrivateRoute'
 import ArtObjectForm from './profile/ArtObjectForm'
+import MobileButton from './mobile/MobileButton'
+
 import Space from './profile/Space'
 import SpaceList from './list/SpaceList'
 import Scene from './scene/Scene'
 import ProfileDefender from './profile/ProfileDefender'
 import SpaceFormNew from './profile/SpaceFormNew';
-
-
+import flatSpace from './flat/flatSpace';
 
 
 
@@ -46,15 +50,18 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <Route exact path="/edit/space/:spaceID" component={SpaceFormNew} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
-                  {/* <Route exact path="/myspaces" component={SpaceList} /> */}
-                  <Route exact path="/space" component={SpaceFormNew} />
-      
-                  <PrivateRoute component={<Route exact path="/myspaces" component={SpaceList} />} />
-                  {/* <PrivateRoute component={<Route exact path="/space" component={SpaceFormNew} />} />  */}
-           
+                  <Route exact path="/logout" component={Logout} />
+                  <Route exact path="/myspaces" component={SpaceList} />
+                  <Route exact path="/reset" component={ResetPassword} />
+                  <Route exact path="/recovery/:token" component={RecoveryLink} />
+
+                  <Route exact path="/create" component={SpaceFormNew} />
+                  <Route exact path="/flat/:spaceID" component={flatSpace} />
+
+                  <Route exact path="/mobile/:spaceID" component={MobileButton} />
+                  <PrivateRoute component={<Route exact path="/edit/:spaceID" component={SpaceFormNew} />} /> 
                 </Switch>
               </div>
             </Fragment>

@@ -38,6 +38,7 @@ class Space(ModelBase):
     artobjects = models.ManyToManyField(ArtObjectShadow, null=True)
     geo = models.TextField(max_length=200, blank=True)
     author = models.ForeignKey(User, related_name='spaces', on_delete=models.CASCADE, null=True)
+    published = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
 
     def add_view(self):

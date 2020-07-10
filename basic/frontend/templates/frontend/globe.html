@@ -14,40 +14,62 @@
        <title>Betrede</title>
        
 
-<link rel="apple-touch-icon" sizes="180x180" href="https://new.betrede.com/static/frontend/img/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://new.betrede.com/static/frontend/img/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://new.betrede.com/static/frontend/img/favicon-16x16.png">
-<link rel="manifest" href="https://new.betrede.com/static/frontend/img/site.webmanifest">
-<link rel="shortcut icon" href="https://new.betrede.com/static/frontend/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="https://betrede.com/static/frontend/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://betrede.com/static/frontend/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://betrede.com/static/frontend/img/favicon-16x16.png">
+<link rel="manifest" href="https://betrede.com/static/frontend/img/site.webmanifest">
+<link rel="shortcut icon" href="https://betrede.com/static/frontend/img/favicon.ico">
 <meta name="msapplication-TileColor" content="#da532c">
-<meta name="msapplication-config" content="https://new.betrede.com/static/frontend/img/browserconfig.xml">
+<meta name="msapplication-config" content="https://betrede.com/static/frontend/img/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
 
    </head>
-   <header><a href="/" class="header-logo"></a><div class="header-globe"></div><div class="header-search"></div><a class="header-text" href="/register">Sign up</a><a class="header-text" href="/login">Log in</a></header>
+   <header>
+       <a href="/" class="header-logo"></a>
+       <div class="header-globe"></div>
+       <div class="header-search"></div>
+    </header>
     </body>
    <body onload="initialize()" >
     
    <div id="earth_div" style="z-index: 1;"></div>
 
    <script>
+    if (localStorage.getItem('token')) {
+        document.querySelector('header').innerHTML += `         <a href="/myspaces" class="header-text">My spaces</a>
+        <a href="/create" class="header-text">Create</a>
+        <a href="/logout/" class="header-text">Log out</a>`
+    } else {
+        document.querySelector('header').innerHTML += `<a class="header-text" href="/register">Sign up</a> <a class="header-text" href="/login/">Log in</a>`
+    }
     function initialize() {
+        if (location.hash) {
+            const geo = location.hash.replace("#", '').replace("%20", '').split(",")
+            var sc = [parseFloat(geo[0], 10), parseFloat(geo[1], 10)]
+            console.log(sc)
+            var bounds = [[sc[0] + 0.006, sc[1] - 0.006], [sc[0] - 0.006, sc[1] + 0.006]];
+        } else {
+            var bounds = [[55.820119, 37.501564], [55.691915, 37.753624]];
+        }
+      
 
-        var bounds = [[55.820119, 37.501564], [55.691915, 37.753624]];
+        
         var earth = new WE.map('earth_div');
         earth.setView([36.057944835, 112.18688965], 2);
         var osm = WE.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{
             attribution: '© OpenStreetMap contributors'
         }).addTo(earth);
-        fetch(`https://new.betrede.com/api/spaces/`)
+        fetch(`https://betrede.com/api/spaces/`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
                 data.map(space => {
-                console.log(space);
-                    var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'https://betrede.com/markers/artist_painter.png', 30, 30).addTo(earth);
-                    marker.bindPopup(`<b>${space.name}</b><br><span> ${space.author}</span><br><a  href='https://new.betrede.com/scene/${space.id}/'> Explore</a>`, {maxWidth: 150, closeButton: true});
+                    console.log(space);
+                    if (space.published) {
+                        var marker = WE.marker([space.geo.split(',')[0], space.geo.split(',')[1].replace(/\s/g, '')], 'https://old.betrede.com/markers/artist_painter.png', 30, 30).addTo(earth);
+                        marker.bindPopup(`<b>${space.name}</b><br><span> ${space.author}</span><br><a  href='https://betrede.com/space/${space.id}/'> Explore</a>`, {maxWidth: 150, closeButton: true});
+                    }
                 })
             })
             .then(() => {
@@ -98,6 +120,9 @@
         // marker9.bindPopup("<b>Natalie Rukavishnikova</b><br>Gallery<br /><span>Gallery</span><a href='/natalie.rukavishnikova'> Explore</a> ", {maxWidth: 150, closeButton: true});
 
         earth.panInsideBounds(bounds);
+        // earth.panTo([55.779891, 37.579534]);
+        
+        // earth.zoomIn(10);
     }
  </script>
    </body>
