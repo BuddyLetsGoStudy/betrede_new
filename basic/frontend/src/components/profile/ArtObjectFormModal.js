@@ -75,6 +75,7 @@ class ArtObjectFormModal extends Component {
                 "Authorization": `Token ${localStorage.getItem("token")}`
             }
         }
+        console.log(formData)
 
         this.props.edit ? this.updateArtObject(formData, config) : this.createArtObject(formData, config) 
     }
@@ -167,7 +168,7 @@ class ArtObjectFormModal extends Component {
                         </div>
                         <label className="artobject-form-modal-file" style={{backgroundImage: upload ? `url('${upload}')` : ''}} onMouseEnter={upload ? this.onHover : null} onMouseLeave={upload ? this.onUnHover : null}>
                             <div className="artobject-form-modal-file-plus"/>
-                            <input type="file" onChange={this.imageChange} name="upload"/>
+                            <input type="file" onChange={this.imageChange} name="upload" accept="image/*"/>
                             { !upload && 'Upload from a computer'}
                         </label>
                         <input className="artobject-form-modal-width" type="number" placeholder="Width (cm)" name="width" value={width} onChange={this.changeSize}></input>

@@ -26,9 +26,6 @@ body{
     overflow: hidden;
   }
   
- 
-  
-  
   
   .btn_enter{
     float: right;
@@ -243,6 +240,12 @@ body{
   margin-bottom: 20px;
 }
 
+@media screen and (max-width: 544px) {
+  .space-list-title{
+    display: none;
+  }
+}
+
 .space-card{
   display: flex;
   align-items: center;
@@ -322,7 +325,7 @@ body{
   transition: .3s;
   color: #FFFFFF;
   font-size: 19px;
-  cursor: default;
+  cursor: pointer;
 }
 
 .space-card-publish:hover{
@@ -369,6 +372,14 @@ header{
   position: relative;
 }
 
+@media screen and (max-width: 555px){
+  header{
+    background-color: white;
+    padding: 0 17px;
+    box-sizing: border-box;
+  }
+}
+
 header > :last-child{
   margin-right: 0;
 }
@@ -383,13 +394,66 @@ header > :last-child{
   display: block;
 }
 
+@media screen and (max-width: 555px){
+  .header-logo{
+    width: 120px;
+    height: 39px;
+  }
+}
+
+.header-burger{
+  display: none;
+  width: 30px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+@media screen and (max-width: 555px){
+  .header-burger{
+    display: flex;
+  }
+}
+
+.header-burger::before{
+  content: " ";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background: #191920;
+  border-radius: 4px;
+  top: 0;
+  left: 0;
+}
+
+.header-burger::after{
+  content: " ";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background: #191920;
+  border-radius: 4px;
+  bottom: 0;
+  left: 0;
+}
+
+.header-burger-line{
+  width: 30px;
+  height: 3px;
+  background: #191920;
+  border-radius: 4px;
+}
+
+
 .header-globe{
   height: 29px;
   width: 29px;
   background-image: url('/static/frontend/img/navbar/globe.svg');
   background-repeat: no-repeat;
   background-size: cover;
-  margin-right: 50px;
+  margin-right: 25px;
 }
 
 .header-search{
@@ -398,7 +462,7 @@ header > :last-child{
   background-image: url('/static/frontend/img/navbar/search.svg');
   background-repeat: no-repeat;
   background-size: cover;
-  margin-right: 40px;
+  margin-right: 25px;
 }
 
 .header-text{
@@ -409,6 +473,12 @@ header > :last-child{
   cursor: pointer;
 }
 
+
+@media screen and (max-width: 555px){
+  .header-text{
+    display: none;
+  }
+}
 
 /* ==============================SPACE FORM================== */
 .space-form-cont{
@@ -528,6 +598,7 @@ header > :last-child{
   visibility: hidden;
   transition: .3s;
   opacity: 0;
+  
 }
 
 .artobject-form-add-pic-alt:after{
@@ -792,6 +863,46 @@ input:focus{
   border-radius: 50%;
   width: 150px;
   height: 150px;
+  cursor: pointer;
+  position: relative;
+  font-size: 15px;
+  background-size: cover;
+  background-position: center;
+}
+
+
+.space-form-meta-info-avatar > input{
+  display: none;
+}
+
+.space-form-meta-info-avatar:hover .space-form-meta-info-avatar-hover{
+  display: block;
+}
+
+.space-form-meta-info-avatar-hover{
+  position: absolute;
+  height: 50%;
+  width: 100%;
+  background: #191920;
+  opacity: 0.86;
+  bottom: 0;
+  border-bottom-right-radius: 80px;
+  border-bottom-left-radius: 80px;
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  box-sizing: border-box;
+  display: none;
+}
+
+.space-form-meta-info-avatar-hover-arrow{
+  background-image: url('./img/spaceForm/arrowUp.svg');
+  background-size: cover;
+  width: 10.68px;
+  height: 13.46px;
+  position: absolute;
+  top: 17px;
+  left: 37px;
 }
 
 .space-form-location-input{
@@ -860,6 +971,12 @@ input:focus{
   width: 313px;
 }
 
+@media screen and (max-width: 400px) {
+  .login-form > div > input{
+    width: 233px;
+  }
+}
+
 .login-form-username::before{
   position: absolute;
   content: "";
@@ -869,6 +986,12 @@ input:focus{
   height: 12px;
   background-image: url('/static/frontend/img/logreg/user.svg');
   z-index: 1;
+}
+
+@media screen and (max-width: 400px) {
+  .login-form-username::before{
+    left: 47px;
+  }
 }
 
 .login-form-password::before{
@@ -884,20 +1007,30 @@ input:focus{
   z-index: 1;
 }
 
+@media screen and (max-width: 400px) {
+  .login-form-password::before{
+    left: 47px;
+  }
+}
 
-.login-form-key::before{
+.register-form-key::before{
   position: absolute;
   content: "";
-  top: 2px;
+  top: 3px;
   left: 9px;
-  width: 11px;
-  height: 12px;
+  width: 15px;
+  height: 17px;
   background-image: url('/static/frontend/img/logreg/key.svg');
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 1;
 }
 
+@media screen and (max-width: 400px) {
+  .register-form-key::before{
+    left: 47px;
+  }
+}
 
 .login-form-button{
   background: #6840FF;
@@ -963,6 +1096,12 @@ input:focus{
   width: 313px;
 }
 
+@media screen and (max-width: 400px) {
+  .register-form > div > input{
+    width: 233px;
+  }
+}
+
 .register-form-email::before{
   position: absolute;
   content: "";
@@ -976,6 +1115,11 @@ input:focus{
   background-position: center;
   z-index: 1;
 }
+@media screen and (max-width: 400px) {
+  .register-form-email::before{
+    left: 47px;
+  }
+}
 
 .register-form-username::before{
   position: absolute;
@@ -986,6 +1130,11 @@ input:focus{
   height: 12px;
   background-image: url('/static/frontend/img/logreg/user.svg');
   z-index: 1;
+}
+@media screen and (max-width: 400px) {
+  .register-form-username::before{
+    left: 47px;
+  }
 }
 
 .register-form-password::before{
@@ -999,6 +1148,11 @@ input:focus{
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 1;
+}
+@media screen and (max-width: 400px) {
+  .register-form-password::before{
+    left: 47px;
+  }
 }
 
 .register-form-button{
@@ -1032,7 +1186,7 @@ input:focus{
 
 .flat-space-gradient-cont{
   z-index: -1;
-  height: calc(100vh - 200px);
+  height: 100vh;
   width: 100%;
   position: absolute;
   left: 0;
@@ -1044,24 +1198,29 @@ input:focus{
   height: 50%;
   background: linear-gradient(180deg, #D5D5D5 0%, rgba(196, 196, 196, 0) 65.1%);
   transform: rotate(-180deg);
+  position: absolute;
+  top: 0;
+  
 }
 
 .flat-space-gradient-bottom{
   width: 100%;
   height: 50%;
   background: linear-gradient(180deg, #B9B9B9 0.01%, rgba(222, 222, 222, 0) 61.98%);
+  position: absolute;
+  top: 50%;
 }
 
 
 .flat-space-avatar{
   width: 93.05px;
-height: 93.05px;
-border-radius: 100px;
-background-color: grey;
-margin: auto;
-margin-top: 36px;
-
+  height: 93.05px;
+  border-radius: 100px;
+  background-color: grey;
+  margin: auto;
+  margin-top: 36px;
 }
+
 .flat-space-name{
   margin-top: 20px;
   font-size: 32px;
@@ -1069,8 +1228,10 @@ margin-top: 36px;
   text-align: center;
   color: #191920;
 }
+
 .flat-space-wall{
   width: 77%;
+  max-width: 1035px;
   padding-top: 29.95%; 
   margin: auto;
   background-color: white;
@@ -1079,6 +1240,179 @@ margin-top: 36px;
   display: flex;
   position: relative;
 }
+
+.flat-space-description{
+  margin: auto;
+  width: 814px;
+  max-height: 132px;
+  overflow: scroll;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #A3A3A3;
+}
+
+.flat-space-button{
+  margin: auto;
+  margin-top: 30px;
+  background: #6840FF;
+  border-radius: 43px;
+  width: 180px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: .3s;
+  font-size: 19px;
+  cursor: pointer;
+  margin-bottom: 50px;
+  text-decoration: none;
+}
+
+.flat-space-button:hover{
+  box-shadow: 0px 5px 15px rgba(104, 64, 255, 0.45);
+}
+
+/* .flat-space-wall::before{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, #B9B9B9 0.01%, rgba(222, 222, 222, 0) 61.98%);
+  content: '';
+}
+
+.flat-space-wall::after{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, #D5D5D5 0%, rgba(196, 196, 196, 0) 65.1%);
+  transform: rotate(-180deg);
+  content: '';
+} */
+
+.flat-space-artobject-pic-alt{
+  background-image: url('./img/common/lupa.svg');
+  width: 100%;
+  height: 100%; 
+  background-color: rgba(248, 248, 248, 0.88);
+  background-size: 48px 52px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: none;
+}
+.flat-space-modal-bg{
+  z-index: 3;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flat-space-modal-cont{
+  max-width: 1180px;
+  width: 100%;
+  height: 760px;
+  margin: auto;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
+  border-radius: 6px;
+  padding: 40px 140px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+}
+
+.flat-space-modal-close{
+  width: 40.59px;
+  height: 40.59px;
+  background-image: url('./img/spaceForm/plus.svg');
+  transform: rotate(45deg);
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: -10px;
+}
+.flat-space-modal-content{
+  display: flex;
+  margin-top: 25px;
+}
+
+.flat-space-modal-pic{
+  width: 50%;
+  height: 546px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.flat-space-modal-text-cont{
+  width: calc(50% - 50px);
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flat-space-modal-text-title-cont{
+  display: flex;
+  width: 100%;
+}
+
+.flat-space-modal-text-title{
+  max-width: 280px;
+  font-size: 19px;
+  color: #191920;
+}
+
+.flat-space-modal-text-description{
+  width: calc(100% - 56px);
+  height: 330px;
+  padding: 20px 28px;
+  border: 1px solid #B6B6B6;
+  font-size: 14px;
+  color: #A3A3A3;
+  margin-top: 18px;
+}
+.flat-space-modal-text-button-cont{
+  display: flex;
+  margin-top: 30px;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.flat-space-modal-text-button-ar{
+  width: 180px;
+  height: 45px;
+  background: #FFFFFF;
+  border-radius: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  color: #A3A3A3;
+  margin-right: 20px;
+  box-shadow: 0px 0px 3px 0px #00000052;
+}
+
+.flat-space-modal-text-button-buy{
+  width: 180px;
+  height: 45px;
+  background: #6840FF;
+  border-radius: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+
 .flat-space-artobject-cont{
   position: absolute;
   display: flex;
@@ -1090,16 +1424,62 @@ margin-top: 36px;
 .flat-space-artobject{
   width: 10px;
   height: 10px;
-  background-color: pink;
+  position: relative;
 }
 
+.flat-space-artobject > :last-child{
+  position: absolute;
+  bottom: -45px;
+  font-size: 12px;
+  color: #A3A3A3;
 
+}
 
+.flat-space-artobject-active{
+  border: 6px solid #191920;
+  background-size: cover;
+}
 
+.flat-space-left-button{
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 50px;
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-image: url('./img/common/arrow-right.svg');
+  transform: rotate(180deg);
+  background-size: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
+.flat-space-right-button{
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 50px;
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-image: url('./img/common/arrow-right.svg');
+  background-size: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-
-
+.display-none{
+  display: none;
+}
 
 
 

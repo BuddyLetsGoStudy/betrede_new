@@ -18,6 +18,8 @@ class SpaceFormNew extends Component {
         this.state = {
             name: '',
             description: '',
+            avatar: '',
+            avatarFile: '',
             geo: [0, 0],
             artObjects: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             artObjectsRedux: []
@@ -34,15 +36,18 @@ class SpaceFormNew extends Component {
 
     createOrUpdateSpace = e => {
         e.preventDefault()
-        const { name, description, geo, artObjects } = this.state;
+        const { name, description, geo, artObjects, avatar, avatarFile } = this.state;
         const { spaceID } =  this.props.match.params;
-        console.log(artObjects)
+        console.log(avatar, avatarFile)
         const space = {
             name,
             description,
             geo: `${geo[0]}, ${geo[1]}`,
-            artObjects
+            artObjects,
+            avatar
         }
+
+       
         spaceID ? this.props.updateSpace(space, spaceID) : this.props.addSpace(space)
         this.props.history.push("/myspaces");
     }
@@ -66,7 +71,7 @@ class SpaceFormNew extends Component {
     }
 
     render() {
-        const { name, description, geo, artObjects, artObjectsRedux } = this.state;
+        const { name, description, geo, artObjects, artObjectsRedux, avatar } = this.state;
         const { sceneIsLoading  } = this.props;
         const { spaceID } = this.props.match.params;
 
@@ -78,7 +83,7 @@ class SpaceFormNew extends Component {
                     <div className="space-form-title">{`${spaceID ? 'Edit' : 'Create'} a space`}</div>
                     <ArtObjectFormNew onChangeState={this.onChangeState} artObjects={artObjects} artObjectsRedux={artObjectsRedux} editSpace={spaceID ? true : false} sceneIsLoading={sceneIsLoading}/>
                     <div className="space-form-meta-and-map">
-                        <SpaceFormMetaInfo onChangeState={this.onChangeState} name={name} description={description}/>
+                        <SpaceFormMetaInfo onChangeState={this.onChangeState} name={name} description={description} avatar={avatar}/>
                         <SpaceFormLocation onChangeState={this.onChangeState} geo={geo}/>
                     </div>
                     <div className="space-form-button" onClick={this.createOrUpdateSpace}>Save</div>

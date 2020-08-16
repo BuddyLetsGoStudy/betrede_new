@@ -1,7 +1,17 @@
 from django.shortcuts import render
 
+# http://m.127.0.0.1:8000/register
+# https://betrede.com/register
+# https://m.betrede.com/register
+
 def index(request):
-    return render(request, 'frontend/index.html')
+    url = request.build_absolute_uri()
+    params = {'mobile': False}
+
+    if url.split('//')[1][0] == 'm':
+        params = {'mobile': True}
+
+    return render(request, 'frontend/index.html', params)
 
 def scene(request, format):
     return render(request, 'frontend/index.html')

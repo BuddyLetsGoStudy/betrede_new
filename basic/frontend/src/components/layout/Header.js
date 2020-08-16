@@ -34,6 +34,9 @@ export class Header extends Component {
         <a href="/" className="header-logo" />
         <div className="header-globe"></div>
         <div className="header-search"></div>
+        <Link to="/login" className="header-burger">
+          <div className="header-burger-line"></div>
+        </Link>
         { isAuthenticated ? authLinks : guestLinks }
       </header>
     )

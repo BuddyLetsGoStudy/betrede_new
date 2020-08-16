@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getAuthorSpaces } from '../../actions/artspace'
 import Card from './Card'
 import { Link, Redirect } from 'react-router-dom'
+import _ from 'lodash';
 
 class SpaceList extends Component {
     constructor(props) {
@@ -23,13 +24,26 @@ class SpaceList extends Component {
         console.log(window.location.pathname)
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
-            console.log('upd')
-            this.props.auth.isAuthenticated && this.props.getAuthorSpaces();
-            this.setState({spaces: this.props.spaces})
+    // componentDidUpdate(prevProps){
+    //     if(!_.isEqual(prevProps.spaces, this.props.spaces)){
+    //         console.log('upd')
+    //         console.log(prevProps.spaces, this.props.spaces)
+
+    //         this.props.auth.isAuthenticated && this.props.getAuthorSpaces();
+    //         this.setState({spaces: this.props.spaces})
+    //     } else {
+    //         this.setState({spaces: this.props.spaces})
+    //     }
+    // }
+
+    static getDerivedStateFromProps(props, current_state) {
+        if (!_.isEqual(current_state.spaces, props.spaces)) {
+          return {
+            spaces: props.spaces,
+          }
         }
-    }
+        return null
+      }
 
     deleted = id => {
         console.log('smth')

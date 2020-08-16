@@ -35,7 +35,7 @@ class Card extends Component {
                 <div className="space-card-avatar"/>
                 <div className="space-card-title">{name}</div>
                 <Link className="space-card-button" to={`/edit/${id}`}>Edit</Link> 
-                <div className="space-card-button">View 2D</div> 
+                <Link className="space-card-button" to={`/flat/${id}`}>View 2D</Link> 
                 <a className="space-card-button" href={`/space/${id}/`}>View 3D</a> 
                 {
                     published ?

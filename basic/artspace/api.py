@@ -66,13 +66,13 @@ class SpaceViewSet(viewsets.ModelViewSet):
     queryset = Space.objects.all()
     filter_fields = ('id', 'artobjects', 'author')
 
-
     def get_queryset(self):
         for space in Space.objects.all().order_by('-created'):
             print(space.author)
         return Space.objects.all().order_by('-created')
 
     def perform_create(self, serializer):
+        print('fuck', self.request.data)
         artObjectsIDs = self.request.data['artObjects']
         if artObjectsIDs:
             pos = 1

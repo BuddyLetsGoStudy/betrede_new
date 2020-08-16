@@ -41,6 +41,7 @@ class Space(ModelBase):
     published = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
 
+
     def add_view(self):
         self.views += 1
         self.save()

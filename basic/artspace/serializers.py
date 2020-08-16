@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import ArtObject, ArtObjectShadow, Space, Category
+from drf_extra_fields.fields import Base64ImageField
 
 # Artobject Serializer
 class ArtObjectSerializer(serializers.ModelSerializer):
@@ -17,7 +18,7 @@ class ArtObjectShadowSerializer(serializers.ModelSerializer):
 
 class SpaceSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
-
+    
     class Meta:
         model = Space
         fields = '__all__'
